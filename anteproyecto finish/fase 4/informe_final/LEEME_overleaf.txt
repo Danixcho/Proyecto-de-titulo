@@ -1,0 +1,26 @@
+INFORME FINAL ABP - FASE 4
+Proyecto de Investigacion (ACIF3002) - Daniel Alejandro Prado Correa
+
+COMO SUBIRLO A OVERLEAF
+  1. Comprime esta carpeta completa en un .zip
+  2. En Overleaf: New Project -> Upload Project -> selecciona el .zip
+  3. Menu -> Settings -> Compiler: pdfLaTeX
+  4. Menu -> Settings -> TeX Live version: 2023 o superior
+  5. Recompila. Overleaf ejecuta Biber automaticamente.
+
+ESTRUCTURA
+  main.tex             Preambulo, portada, indices y estructura
+  referencias.bib      12 referencias verificadas con DOI
+  secciones/*.tex      20 archivos, uno por seccion
+  figuras/*.pdf        6 figuras vectoriales de la simulacion
+
+FORMATO CONFIGURADO (segun rubrica)
+  Tamano carta, margenes 2,5 cm, Times New Roman 12 pt,
+  interlineado 1,5, normas APA 7 via biblatex-apa.
+
+PDF YA COMPILADO
+  f4_s11_informe_dprado.pdf  (62 paginas, compilado sin errores)
+
+PENDIENTE POR TI
+  - Ajustar la portada a la plantilla institucional cuando la consigas
+  - Confirmar con el docente guia el plazo de entrega

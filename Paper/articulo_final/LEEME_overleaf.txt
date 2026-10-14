@@ -1,0 +1,26 @@
+ARTICULO CIENTIFICO - FORMATO IEEE
+"A Digital Twin-Based State Estimation Framework for Decision Support
+ in Primary Crushing Mining Operations"
+
+COMO SUBIRLO A OVERLEAF
+  1. Comprime esta carpeta en un .zip
+  2. Overleaf: New Project -> Upload Project -> selecciona el .zip
+  3. Menu -> Settings -> Compiler: pdfLaTeX
+  4. Recompila. Overleaf ejecuta BibTeX automaticamente.
+
+ESTRUCTURA
+  main.tex           Documento completo (clase IEEEtran, opcion conference)
+  referencias.bib    Mismo archivo .bib que el informe final ABP
+  figuras/*.pdf      6 figuras vectoriales, rotuladas en ingles
+
+PDF YA COMPILADO
+  f4_s11_articulo_dprado.pdf  (8 paginas, sin errores ni referencias sueltas)
+
+NOTA SOBRE LOS DOI
+  IEEEtran.bst version 1.14 no imprime el campo doi. Los DOI de las 12
+  fuentes estan igualmente en referencias.bib y en el Anexo A del informe.
+  Si quieres que aparezcan en el paper, se pueden pasar al campo 'note'.
+
+PENDIENTE POR TI
+  - Confirmar con Omar la plantilla IEEE especifica de la asignatura
+  - Confirmar el titulo definitivo con los coautores

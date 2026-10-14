@@ -1,0 +1,25 @@
+Retroalimentación general — Sumativa 4 
+Daniel:
+
+Esta entrega cierra bien el semestre. Lo primero que corresponde decir es que hiciste lo que la Sumativa 3 no hizo: consolidaste en vez de resumir. Todo lo que te costó puntaje en esa entrega está corregido y, más importante, corregido de forma verificable —citación APA 7 con doce fuentes y correspondencia completa cita–referencia, matriz de revisión bibliográfica con DOI, caracterización de los cuatro instrumentos, criterios de calidad con verificación efectivamente ejecutada, consideraciones éticas bajo esquema riesgo–mitigación, coherencia dimensional entre MSE y RMSE—. El Anexo C, donde registras cada observación recibida con su ajuste y la sección donde se materializa, es un estándar de trabajo que deberías mantener más allá de esta asignatura.
+
+En el fondo del trabajo, tu decisión de mayor valor fue reconocer que el hallazgo central no es la reducción del error sobre el volumen sino la reconstrucción de la tasa de llenado, y sostenerlo con evidencia en vez de con retórica. Igual de importante: declaraste explícitamente que el filtro es óptimo por construcción sobre datos generados por su propio modelo. Esa declaración no te debilita, te da credibilidad; es lo que hace confiable todo lo demás que afirmas.
+
+Dicho eso, hay debilidades concretas y se concentran en dos frentes.
+
+El artículo está por debajo del informe. Debería ser su equivalente comprimido y hoy no lo es. No enuncia la pregunta de investigación ni los objetivos: quien lee el paper sabe qué contribuiste, pero no qué te preguntaste ni qué te propusiste lograr, y la lista de contribuciones queda como una enumeración autónoma en vez de ser la respuesta a algo declarado. A la metodología le faltan dos componentes que el informe sí tiene: criterios de calidad y consideraciones éticas. Esto último es especialmente inconsistente, porque en la sección 16 del informe te comprometes expresamente a declarar el nivel de madurez tecnológica en el informe, en el artículo y en la presentación oral, y en el artículo solo aparece dentro de Limitations. Además, el bloque de autoría conserva texto de la plantilla sin editar («Student author — to develop methodology…», «Co-author»), que es lo primero que vería un editor.
+
+Faltan precisiones puntuales en el informe. Tres, todas acotadas. El plan del proyecto no tiene plazos: la sección 7.4 resuelve el criterio temporal diciendo que cada etapa se ancla a la fecha de la sumativa correspondiente, pero esas fechas no están en ninguna parte, y un plan sin dimensión temporal explícita no es auditable. La sección 10 se titula «Población, muestra y unidad de análisis» pero nunca define la muestra: declaras una población de estaciones reales de chancado y jamás la conectas con las cincuenta corridas sintéticas, que son tu muestra efectiva; queda un salto sin justificar. Y los experimentos de sensibilidad no declaran cuántas réplicas se ejecutan por punto, razón por la cual la tabla 9 (89,33 % para R = 5) no se reconcilia con la tabla 6 (89,57 %) y el lector no puede saber si la diferencia es de diseño o un error.
+
+Prioridades antes del examen de la semana 13. En orden:
+
+Cerrar el artículo: pregunta y objetivos al final de la introducción, dos subsecciones breves al final de la metodología (Quality Criteria y Ethical Considerations), y bloque de autoría en formato IEEE con departamento, universidad, ciudad, país y correo.
+Resolver plazos del plan y definición de muestra. Son las dos observaciones que un evaluador externo levantaría de inmediato.
+Preparar la pregunta que con mayor probabilidad recibirás en la defensa: si el filtro es óptimo por construcción sobre datos generados por su propio modelo, qué demuestra realmente el 89,57 %. La respuesta está en tu sección 18.5, pero tienes que poder darla en treinta segundos y sin ponerte a la defensiva: el estudio verifica implementación correcta y cuantifica márgenes de robustez, no predice desempeño en planta. Dicha con firmeza, esa respuesta es una fortaleza; dicha con vacilación, se transforma en la grieta del trabajo.
+Un detalle menor pero visible: la diapositiva 10 de tu presentación conserva los rótulos genéricos de la plantilla («Materials & Methods», «Discussion & Conclusion»), que no corresponden a los títulos reales de tu artículo. Corrígelo, porque es justamente la lámina donde afirmas la correspondencia entre ambos productos.
+
+ 
+
+Quedo atento.
+
+Saludos.

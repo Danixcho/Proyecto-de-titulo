@@ -1,0 +1,159 @@
+\section{Población, muestra y unidad de análisis}
+\label{sec:unidad}
+
+\subsection{Delimitación de la población}
+
+La población objetivo del estudio corresponde a las estaciones de chancado
+primario giratorio y de mandíbula de la gran minería a cielo abierto,
+caracterizadas por alimentación discontinua mediante camiones de extracción de
+gran tonelaje y por sistemas SCADA de adquisición de datos telemétricos con
+frecuencias de muestreo estándar del orden de \SIrange{1}{10}{\hertz}.
+
+\subsection{Unidad de análisis y vector de estado dinámico}
+
+La unidad de análisis es el subsistema ciberfísico de recepción y descarga —la
+tolva de alimentación del chancador— modelado computacionalmente mediante el
+vector de estado dinámico bidimensional en tiempo discreto:
+
+\begin{equation}
+\mathbf{x}_{k} = \begin{bmatrix} V_{k} \\ \dot{V}_{k} \end{bmatrix}
+\in \mathbb{R}^{2}
+\label{eq:vector-estado}
+\end{equation}
+
+donde $V_{k}$ [\si{\metre\cubed}] representa el volumen de mineral retenido en
+la cámara de trituración y $\dot{V}_{k}$ [\si{\metre\cubed\per\second}] denota
+la tasa neta instantánea de variación de flujo volumétrico, dominada por la
+extracción continua del chancador.
+
+La dinámica expresa la conservación de masa de la tolva discretizada por Euler:
+
+\begin{align}
+V_{k+1} &= V_{k} + \Delta t\,\dot{V}_{k} + \Delta t\,u_{k}\\
+\dot{V}_{k+1} &= \dot{V}_{k} + w_{k}\\
+y_{k} &= V_{k} + v_{k}
+\end{align}
+
+lo que corresponde a las matrices
+
+\begin{equation}
+\mathbf{A} = \begin{bmatrix} 1 & \Delta t\\ 0 & 1\end{bmatrix},\qquad
+\mathbf{B} = \begin{bmatrix} \Delta t\\ 0\end{bmatrix},\qquad
+\mathbf{H} = \begin{bmatrix} 1 & 0\end{bmatrix}
+\label{eq:matrices}
+\end{equation}
+
+La entrada $u_{k}$ [\si{\metre\cubed\per\second}] corresponde al caudal de
+descarga de camión: es un evento operacional conocido y registrado por el SCADA,
+y por eso ingresa como entrada de control y no como perturbación. En cambio
+$\dot{V}_{k}$ representa la componente \textbf{no sensada} de la dinámica —la
+tasa de extracción del chancador, que varía con la dureza del mineral y no
+cuenta con instrumentación directa— y por eso se modela como caminata aleatoria.
+
+Esta separación es el núcleo formal del problema de observabilidad parcial: la
+estructura de $\mathbf{H}$ muestra que el sensor observa el volumen y nunca la
+tasa.
+
+\subsection{Verificación de la condición de observabilidad}
+
+La reconstrucción de $\dot{V}_{k}$ a partir de la secuencia de mediciones de
+volumen solo es posible si el par $(\mathbf{A}, \mathbf{H})$ es observable. La
+matriz de observabilidad del sistema es
+
+\begin{equation}
+\mathcal{O} = \begin{bmatrix} \mathbf{H} \\ \mathbf{H}\mathbf{A}\end{bmatrix}
+= \begin{bmatrix} 1 & 0\\ 1 & \Delta t\end{bmatrix},
+\qquad \det(\mathcal{O}) = \Delta t \neq 0
+\label{eq:observabilidad}
+\end{equation}
+
+de modo que $\operatorname{rango}(\mathcal{O}) = 2$ para todo paso de
+discretización no nulo. El sistema es, por tanto, completamente observable: la
+tasa de llenado es matemáticamente reconstruible pese a no medirse jamás de
+forma directa. Esta verificación se ejecuta computacionalmente al inicio de cada
+corrida del módulo y su resultado se registra en la salida del programa.
+
+\subsection{Parametrización y criterios de selección}
+
+La tabla~\ref{tab:parametros} consolida la parametrización completa del
+experimento con sus unidades y su fundamento físico.
+
+\begin{table}[H]
+\centering
+\caption{Parametrización del experimento y fundamento de cada valor.}
+\label{tab:parametros}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} & \textbf{Unidad} & \textbf{Fundamento}\\
+\midrule
+$\Delta t$ & \num{1,0} & \si{\second} & Muestreo SCADA a \SI{1}{\hertz}\\
+$N$ & \num{1000} & pasos & Horizonte de \SI{16,7}{\minute} de operación\\
+$M$ & \num{50} & corridas & Diseño de Monte Carlo\\
+Semilla & \num{42} & --- & Reproducibilidad determinista\\
+$Q_{11}$ & \num{0,01} & \si{\metre\tothe{6}} & Ruido de proceso sobre el volumen\\
+$Q_{22}$ & \num{1,0e-4} & \si{\metre\tothe{6}\per\second\squared} &
+Variabilidad de la tasa por dureza del mineral\\
+$R$ & \num{5,0} & \si{\metre\tothe{6}} & Ruido del sensor
+($\sigma_v = \SI{2,236}{\metre\cubed}$)\\
+$V_{0}$ & \num{15,0} & \si{\metre\cubed} & Tolva casi vacía al inicio de turno\\
+$\dot{V}_{0}$ & \num{-0,8} & \si{\metre\cubed\per\second} &
+Extracción nominal ($\approx\SI{5760}{\tonne\per\hour}$ a
+\SI{2,0}{\tonne\per\metre\cubed})\\
+$\hat{V}_{0}$ & \num{15,0} & \si{\metre\cubed} & Estimación inicial del filtro\\
+$\hat{\dot{V}}_{0}$ & \num{0,0} & \si{\metre\cubed\per\second} &
+El filtro desconoce la tasa: debe inferirla\\
+$\mathbf{P}_{0}$ & $\operatorname{diag}(10{,}0;\ 1{,}0)$ & --- &
+Incertidumbre inicial\\
+$u$ camión & \num{4,5} & \si{\metre\cubed\per\second} &
+$\approx\SI{202}{\metre\cubed}$ por evento de \SI{45}{\second}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La calibración física del régimen operacional responde a la escala real del
+activo. Una extracción nominal de \SI{0,8}{\metre\cubed\per\second} equivale a
+aproximadamente \SI{5760}{\tonne\per\hour} con densidad aparente de
+\SI{2,0}{\tonne\per\metre\cubed}, coherente con un chancador giratorio de gran
+capacidad. Cada descarga de camión aporta unos \SI{202}{\metre\cubed},
+consistente con un camión de extracción de \SIrange{300}{400}{\tonne}. Cuatro
+ciclos de camión en el horizonte simulado mantienen la tolva en una banda
+operativa comprendida entre \num{7} y \SI{300}{\metre\cubed}.
+
+\subsubsection*{Criterios de inclusión y exclusión}
+
+Se incluyen regímenes de operación con pulsos de carga volumétrica en el rango
+$u_{k} \in [0;\ 4{,}5]$~\si{\metre\cubed\per\second}, representativos del ciclo
+de descarga de camiones acoplado a una tasa de trituración continua. Se excluyen
+los estados transitorios de arranque y parada del equipo, así como las anomalías
+catastróficas de atascamiento, por corresponder a regímenes en que el supuesto
+de linealidad del modelo deja de ser válido.
+
+\subsection{Nota de recalibración de la covarianza de proceso}
+\label{sec:recalibracion}
+
+Las entregas de la Fase 3 declaraban $\mathbf{Q} = \operatorname{diag}(0{,}01;\
+0{,}05)$. Al implementar el modelo se verificó numéricamente que una covarianza
+de proceso de $0{,}05$ por paso sobre la tasa produce, en un horizonte de $N =
+1000$, una caminata aleatoria con desviación acumulada de
+$\sqrt{1000 \times 0{,}05} = \SI{7,07}{\metre\cubed\per\second}$, es decir casi
+nueve veces la tasa de extracción nominal de
+\SI{0,8}{\metre\cubed\per\second}. Bajo ese régimen la tolva se llenaría o
+vaciaría a velocidades físicamente imposibles para el activo, y el
+\emph{truth model} dejaría de representar el proceso que pretende modelar.
+
+Se recalibró en consecuencia $Q_{22} = 1{,}0\times10^{-4}$, valor que produce
+una dispersión acumulada de \SI{0,32}{\metre\cubed\per\second} en torno a la
+tasa nominal —aproximadamente un \SI{40}{\percent} de variabilidad atribuible a
+la dureza variable del mineral—, coherente con la operación real de una estación
+de chancado. El valor $Q_{11} = 0{,}01$ se mantuvo sin modificación.
+
+Asimismo, se unificó la condición inicial en
+$\mathbf{x}_{0} = [15{,}0;\ -0{,}8]^{\mathsf{T}}$, resolviendo una
+inconsistencia entre documentos previos que declaraban alternativamente
+$[15{,}0;\ 0{,}0]^{\mathsf{T}}$ y $[10{,}0;\ 0{,}0]^{\mathsf{T}}$. La
+componente de tasa se fija en el valor nominal de extracción, mientras que la
+estimación inicial del filtro se mantiene en $[15{,}0;\ 0{,}0]^{\mathsf{T}}$
+precisamente para que el estimador deba inferir la tasa sin conocerla, poniendo
+a prueba la propiedad de observabilidad verificada en la
+ecuación~\eqref{eq:observabilidad}.

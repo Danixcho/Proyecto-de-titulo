@@ -1,0 +1,101 @@
+\section{Técnicas e instrumentos de recolección de datos}
+\label{sec:tecnicas}
+
+La técnica de levantamiento corresponde a la \textbf{simulación computacional
+numérica y generación sintética de series temporales}, implementada en Python~3
+con NumPy y SciPy. Se emplean cuatro instrumentos operativos, cuyo propósito,
+tipo de información producida y estado de avance se detallan a continuación. El
+estado declarado no es una afirmación de intención: cada instrumento corresponde
+a un módulo de código ejecutable incluido en el anexo digital.
+
+\subsection{Instrumento 1: Generador de referencia física (\emph{truth model})}
+
+\textbf{Propósito.} Producir la trayectoria dinámica real del sistema
+($\mathbf{x}_{k}$) libre de perturbaciones de medición, que opera como verdad de
+referencia contra la cual se contrasta tanto la telemetría degradada como la
+estimación del módulo.
+
+\textbf{Información que permite obtener.} Series temporales del volumen real y
+de la tasa real de llenado, en \si{\metre\cubed} y
+\si{\metre\cubed\per\second} respectivamente, para los $N$ pasos del horizonte.
+
+\textbf{Forma de aplicación.} Implementa las ecuaciones de espacio de estados de
+la sección~\ref{sec:unidad}, propagando el estado mediante las matrices
+$\mathbf{A}$ y $\mathbf{B}$ e inyectando la perturbación de proceso
+$\mathbf{w}_{k}$ muestreada por factorización de Cholesky de $\mathbf{Q}$.
+
+\textbf{Relación con los objetivos.} Materializa OE2 y provee el denominador de
+todas las métricas de error de OE4.
+
+\textbf{Estado.} Implementado, calibrado y verificado.
+
+\subsection{Instrumento 2: Generador de telemetría SCADA degradada}
+
+\textbf{Propósito.} Simular la degradación de la señal del sensor físico bajo
+condiciones extremas de vibración y polvo abrasivo, produciendo la lectura
+$y_{k}$ que un operador vería en consola.
+
+\textbf{Información que permite obtener.} La serie temporal de mediciones
+ruidosas de volumen, que constituye simultáneamente la entrada del filtro y la
+\textbf{línea base} contra la cual se mide su aporte.
+
+\textbf{Forma de aplicación.} Aplica la ecuación de medición inyectando ruido
+gaussiano $v_{k} \sim \mathcal{N}(0, R)$ sobre la componente observada del
+estado real.
+
+\textbf{Relación con los objetivos.} Materializa OE1, al traducir la
+caracterización estadística del entorno en una perturbación concreta y
+parametrizada.
+
+\textbf{Estado.} Completamente operativo.
+
+\subsection{Instrumento 3: Módulo de software analítico (Filtro de Kalman)}
+
+\textbf{Propósito.} Implementar el ciclo recursivo predictor-corrector que
+actualiza la estimación $\hat{\mathbf{x}}_{k|k}$ y minimiza la matriz de
+covarianza del error $\mathbf{P}_{k|k}$.
+
+\textbf{Información que permite obtener.} Series temporales del volumen y la
+tasa estimados, junto con el historial completo de la ganancia
+$\mathbf{K}_{k}$, la covarianza $\mathbf{P}_{k|k}$ y la innovación de cada
+ciclo, lo que habilita el análisis de convergencia asintótica.
+
+\textbf{Forma de aplicación.} El núcleo se implementa como clase genérica
+desacoplada del proceso físico: recibe las matrices del sistema y opera sin
+conocer el dominio de aplicación. La actualización de covarianza emplea la forma
+de Joseph,
+\[
+\mathbf{P}_{k|k} = (\mathbf{I}-\mathbf{K}_{k}\mathbf{H})\,\mathbf{P}_{k|k-1}\,
+(\mathbf{I}-\mathbf{K}_{k}\mathbf{H})^{\mathsf{T}}
++ \mathbf{K}_{k}\mathbf{R}\mathbf{K}_{k}^{\mathsf{T}},
+\]
+algebraicamente equivalente a la forma simplificada
+$(\mathbf{I}-\mathbf{K}\mathbf{H})\mathbf{P}$ pero numéricamente estable:
+preserva la simetría y la definición positiva de $\mathbf{P}$ frente a errores
+de redondeo en aritmética de punto flotante, condición necesaria para
+horizontes largos.
+
+\textbf{Relación con los objetivos.} Materializa OE3.
+
+\textbf{Estado.} Implementado y verificado.
+
+\subsection{Instrumento 4: Registro estructurado de trazabilidad}
+
+\textbf{Propósito.} Serializar cada variable temporal con su sello de paso $k$,
+garantizando auditoría completa del experimento por terceros.
+
+\textbf{Información que permite obtener.} Archivos CSV con dieciséis columnas
+por cada uno de los \num{1000} pasos de la corrida de referencia —entrada de
+control, estado real, lectura degradada, estimación, errores de ambas fuentes,
+componentes de la ganancia, diagonal de la covarianza e innovación—, más los
+registros agregados de las \num{50} corridas de Monte Carlo, del barrido de
+degradación y de la malla de sensibilidad. Se incluye además un archivo JSON con
+la parametrización completa y la versión de cada biblioteca del entorno de
+ejecución.
+
+\textbf{Relación con los objetivos.} Sustenta el criterio de validez interna y
+trazabilidad de la sección~\ref{sec:calidad}, y provee la evidencia del proceso
+exigida por el diseño metodológico.
+
+\textbf{Estado.} Operativo; los archivos generados se adjuntan como anexo
+digital.

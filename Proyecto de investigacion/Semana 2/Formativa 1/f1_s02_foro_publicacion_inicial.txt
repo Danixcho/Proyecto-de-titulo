@@ -1,0 +1,13 @@
+Brechas y desafíos para consolidar el módulo de estimación de estados
+
+Mi diagnóstico identificó cuatro brechas, que priorizo según su impacto en la continuidad del proyecto.
+
+La más crítica es metodológica: la validación es circular. Los datos sintéticos provienen del mismo modelo que usa el Filtro de Kalman, por lo que la reducción del 89,57 % del MSE verifica que la implementación es correcta, pero no demuestra desempeño fuera del modelo. El docente la señaló como la única limitación real del Anteproyecto. La sigue una brecha conceptual: presenté el trabajo como un gemelo digital, pero con la definición estándar (Kritzinger et al., 2018; Sepasgozar, 2021) corresponde a un modelo digital de un componente; además, el objetivo general («optimizar la observabilidad») es conceptualmente impreciso, porque la observabilidad es una propiedad estructural del sistema. Después vienen una brecha analítica (la mejora del 98,17 % en la tasa latente se calculó contra una línea base débil; frente a una razonable baja a cerca del 40 %) y una teórica (los parámetros Q y R carecen de fuente).
+
+Estas brechas plantean dos desafíos. En el Informe ABP, rediseñar la metodología y alinear título, problema y objetivos. En el Paper, sostener contribuciones que un revisor no pueda objetar por circularidad y ajustar el texto a seis páginas.
+
+Propongo cuatro acciones: (1) en la semana 3, reformular el encuadre y el objetivo general, ampliar el estado del arte (EKF, UKF y filtros adaptativos) y declarar Q y R como supuestos de diseño con análisis de sensibilidad; (2) para la Sumativa 1, diseñar una planta de simulación independiente del filtro, con seis mecanismos de divergencia y una línea base por mínimos cuadrados; (3) entre las semanas 5 y 7, ejecutarla y evaluar la consistencia del filtro (NEES/NIS); y (4) hacia la Sumativa 3, comparar el filtro con EKF, UKF y un filtro adaptativo.
+
+Referencias
+Kritzinger, W., Karner, M., Traar, G., Henjes, J., & Sihn, W. (2018). Digital Twin in manufacturing: A categorical literature review and classification. IFAC-PapersOnLine, 51(11), 1016–1022. https://doi.org/10.1016/j.ifacol.2018.08.474
+Sepasgozar, S. M. E. (2021). Differentiating digital twin from digital shadow: Elucidating a paradigm shift to expedite a smart, sustainable built environment. Buildings, 11(4), 151. https://doi.org/10.3390/buildings11040151

@@ -1,0 +1,103 @@
+\section{Coherencia metodológica del proyecto}
+\label{sec:coherencia}
+
+Esta sección analiza la coherencia interna del estudio, verificando que el
+diseño metodológico efectivamente responde a la pregunta de investigación
+formulada.
+
+\subsection{Cadena de articulación}
+
+El proyecto exhibe una articulación vertical unívoca. El \textbf{fenómeno}
+—degradación estocástica de la telemetría en chancado primario— se delimita como
+\textbf{problema} informático de observabilidad parcial; de ese problema se
+deriva la \textbf{pregunta} sobre la capacidad de un estimador estocástico para
+reconstruir el estado interno; la pregunta se descompone en cuatro
+\textbf{objetivos} que cubren caracterización, modelación, implementación y
+validación; y cada objetivo determina una \textbf{decisión metodológica} con su
+instrumento correspondiente. La tabla~\ref{tab:coherencia} formaliza esa cadena
+e incorpora la evidencia efectivamente producida.
+
+\begin{table}[H]
+\centering
+\caption{Matriz de coherencia metodológica y trazabilidad del proyecto.}
+\label{tab:coherencia}
+\footnotesize
+\begin{tabular}{@{}p{2.9cm}p{3.2cm}p{3.2cm}p{3.9cm}@{}}
+\toprule
+\textbf{Objetivo específico} & \textbf{Decisión metodológica} &
+\textbf{Instrumento} & \textbf{Evidencia producida}\\
+\midrule
+\textbf{OE1.} Caracterizar el ruido SCADA en chancado primario &
+Modelación de ruido gaussiano mediante $\mathbf{Q}$ y $\mathbf{R}$
+parametrizadas &
+Revisión de literatura indexada y generador de degradación &
+Tabla~\ref{tab:parametros}; verificación de que
+$\mathrm{MSE}_{\text{SCADA}} \approx R$\\
+\addlinespace
+\textbf{OE2.} Modelar la dinámica de flujo en la tolva &
+Espacio de estados lineal en tiempo discreto con estado latente &
+Ecuaciones de balance de masa y matrices
+$\mathbf{A},\mathbf{B},\mathbf{H}$ &
+Ecuaciones~\eqref{eq:vector-estado}--\eqref{eq:matrices};
+observabilidad verificada, ec.~\eqref{eq:observabilidad}\\
+\addlinespace
+\textbf{OE3.} Desarrollar el Filtro de Kalman Lineal &
+Programación modular científica con núcleo desacoplado &
+Ciclo recursivo predictor-corrector en forma de Joseph &
+Módulo ejecutable; figura~\ref{fig:convergencia};
+sección~\ref{sec:extensibilidad}\\
+\addlinespace
+\textbf{OE4.} Validar el desempeño frente a la lectura degradada &
+Monte Carlo e inferencia estadística pareada &
+Métricas MSE/RMSE, prueba t, Wilcoxon y análisis de sensibilidad &
+Tablas~\ref{tab:resultados-volumen}--\ref{tab:degradacion};
+figuras~\ref{fig:montecarlo}--\ref{fig:sensibilidad}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Verificación de que el diseño responde a la pregunta}
+
+La pregunta de investigación exige tres cosas y el diseño provee evidencia para
+cada una.
+
+Exige, primero, \textbf{mitigar el ruido instrumental}. El diseño lo verifica
+comparando el error de la señal filtrada contra la línea base declarada, con una
+verdad de referencia conocida por construcción, condición que solo la simulación
+permite garantizar.
+
+Exige, segundo, \textbf{reconstruir el estado dinámico interno} en un sistema
+\textbf{parcialmente observable}. El diseño aborda esta exigencia de manera
+directa mediante la incorporación de la tasa de llenado como estado latente no
+sensado, y verifica formalmente la condición de observabilidad que hace posible
+su reconstrucción. Sin ese segundo estado, el estudio no podría afirmar nada
+sobre observabilidad parcial: se limitaría a suavizar una señal medida.
+
+Exige, tercero, que la reconstrucción sea \textbf{confiable}. El diseño
+operacionaliza esa exigencia mediante una prueba de hipótesis formal con nivel
+de significancia declarado, un intervalo de confianza y un contraste de robustez
+no paramétrico, de modo que la afirmación de confiabilidad sea verificable y no
+argumentativa.
+
+\subsection{Ajustes realizados para fortalecer la coherencia}
+
+La coherencia del diseño no fue estática: se fortaleció mediante ajustes
+concretos durante el desarrollo, la mayoría de ellos derivados de la
+retroalimentación docente y documentados en el Anexo~\ref{anexo:ajustes}.
+
+Tres de esos ajustes merecen mención en este análisis por su impacto en la
+coherencia interna. El primero es la \textbf{separación dimensional} entre MSE y
+RMSE, que resolvió la inconsistencia de reportar métricas en
+\si{\metre\tothe{6}} junto a intervalos de confianza en \si{\metre\cubed}, y que
+condujo a la decisión de fundar toda la inferencia sobre el RMSE. El segundo es
+la \textbf{verificación empírica del supuesto de normalidad}, que reveló su
+incumplimiento y motivó la incorporación del contraste de Wilcoxon; sin ese
+ajuste, la conclusión estadística habría descansado sobre un supuesto no
+satisfecho. El tercero es la \textbf{recalibración de la covarianza de proceso}
+descrita en la sección~\ref{sec:recalibracion}, que restituyó la
+correspondencia entre el modelo y la física del activo.
+
+Corresponde señalar que los dos primeros ajustes fueron sugeridos por la
+retroalimentación docente antes de que sus consecuencias fueran evidentes, y el
+tercero emergió de la implementación efectiva del modelo. Esto ilustra que la
+coherencia metodológica se verifica al construir, y no solo al declarar.

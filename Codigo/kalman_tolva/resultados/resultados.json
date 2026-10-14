@@ -1,0 +1,219 @@
+{
+  "parametros": {
+    "dt": 1.0,
+    "N": 1000,
+    "M": 50,
+    "semilla": 42,
+    "q_volumen": 0.01,
+    "q_tasa": 0.0001,
+    "r_sensor": 5.0,
+    "V0": 15.0,
+    "Vdot0": -0.8,
+    "V0_filtro": 15.0,
+    "Vdot0_filtro": 0.0,
+    "p0_volumen": 10.0,
+    "p0_tasa": 1.0,
+    "caudal_camion": 4.5,
+    "ventanas_camion": [
+      [
+        10,
+        55
+      ],
+      [
+        255,
+        300
+      ],
+      [
+        505,
+        550
+      ],
+      [
+        755,
+        800
+      ]
+    ]
+  },
+  "entorno": {
+    "python": "3.12.10",
+    "numpy": "2.1.1",
+    "scipy": "1.16.1",
+    "plataforma": "Windows-11-10.0.26200-SP0"
+  },
+  "resultados": {
+    "mse_scada_V_medio": 4.965965325955023,
+    "mse_kf_V_medio": 0.5178729072107423,
+    "mse_scada_V_desv": 0.23399399403393567,
+    "mse_kf_V_desv": 0.086539546368313,
+    "rmse_scada_V_medio": 2.2278450386320223,
+    "rmse_kf_V_medio": 0.7172772515997653,
+    "rmse_scada_V_desv": 0.0522143325943312,
+    "rmse_kf_V_desv": 0.058782299399419626,
+    "reduccion_mse_V_pct": 89.57155611812193,
+    "reduccion_rmse_V_pct": 67.80398819658483,
+    "rmse_dif_finitas_medio": 3.689056922547205,
+    "rmse_kf_Vdot_medio": 0.067362420517203,
+    "reduccion_rmse_Vdot_pct": 98.17399346414284,
+    "inferencia_V": {
+      "M": 50,
+      "media_diferencia": 1.510567787032257,
+      "desv_diferencia": 0.07898271160170883,
+      "error_estandar": 0.011169842194013943,
+      "t_estadistico": 135.23626930394673,
+      "gl": 49,
+      "p_unilateral": 5.151375493162264e-65,
+      "ic95_inferior": 1.4881211487565251,
+      "ic95_superior": 1.5330144253079887,
+      "shapiro_W": 0.9459250757618888,
+      "shapiro_p": 0.023263986659552916,
+      "normalidad_no_rechazada": false,
+      "wilcoxon_W": 1275.0,
+      "wilcoxon_p": 8.881784197001252e-16,
+      "cohen_d": 19.125296617438178,
+      "alpha": 0.05,
+      "rechaza_H0": true
+    },
+    "inferencia_Vdot": {
+      "M": 50,
+      "media_diferencia": 3.621694502030002,
+      "desv_diferencia": 0.08641219239535379,
+      "error_estandar": 0.012220529443990255,
+      "t_estadistico": 296.3615053365023,
+      "gl": 49,
+      "p_unilateral": 1.0922308371322364e-81,
+      "ic95_inferior": 3.5971364286747507,
+      "ic95_superior": 3.6462525753852537,
+      "shapiro_W": 0.9832682834055363,
+      "shapiro_p": 0.6953741230133876,
+      "normalidad_no_rechazada": true,
+      "wilcoxon_W": 1275.0,
+      "wilcoxon_p": 8.881784197001252e-16,
+      "cohen_d": 41.9118460212188,
+      "alpha": 0.05,
+      "rechaza_H0": true
+    }
+  },
+  "sensibilidad_degradacion": [
+    {
+      "R": 1.0,
+      "sigma_sensor_m3": 1.0,
+      "mse_scada_m6": 0.9873815734451945,
+      "mse_kf_m6": 0.16467451974944472,
+      "rmse_scada_m3": 0.9935441055123352,
+      "rmse_kf_m3": 0.40538821643357253,
+      "reduccion_mse_pct": 83.32209915819489,
+      "reduccion_rmse_pct": 59.197763422437255
+    },
+    {
+      "R": 5.0,
+      "sigma_sensor_m3": 2.23606797749979,
+      "mse_scada_m6": 4.936907867225974,
+      "mse_kf_m6": 0.5267604847628935,
+      "rmse_scada_m3": 2.2216321585698062,
+      "rmse_kf_m3": 0.7243058178247237,
+      "reduccion_mse_pct": 89.33015363199642,
+      "reduccion_rmse_pct": 67.39758132187818
+    },
+    {
+      "R": 20.0,
+      "sigma_sensor_m3": 4.47213595499958,
+      "mse_scada_m6": 19.747631468903894,
+      "mse_kf_m6": 1.4492525307871047,
+      "rmse_scada_m3": 4.4432643171396125,
+      "rmse_kf_m3": 1.1994955031880552,
+      "reduccion_mse_pct": 92.66113238405725,
+      "reduccion_rmse_pct": 73.00418301560235
+    },
+    {
+      "R": 50.0,
+      "sigma_sensor_m3": 7.0710678118654755,
+      "mse_scada_m6": 49.36907867225973,
+      "mse_kf_m6": 2.8310466802298313,
+      "rmse_scada_m3": 7.025417744156951,
+      "rmse_kf_m3": 1.6738078334750774,
+      "reduccion_mse_pct": 94.26554686380933,
+      "reduccion_rmse_pct": 76.17497073583723
+    },
+    {
+      "R": 100.0,
+      "sigma_sensor_m3": 10.0,
+      "mse_scada_m6": 98.73815734451946,
+      "mse_kf_m6": 4.707480092253622,
+      "rmse_scada_m3": 9.935441055123356,
+      "rmse_kf_m3": 2.154666712598616,
+      "reduccion_mse_pct": 95.2323597899157,
+      "reduccion_rmse_pct": 78.31332599484821
+    },
+    {
+      "R": 200.0,
+      "sigma_sensor_m3": 14.142135623730951,
+      "mse_scada_m6": 197.47631468903893,
+      "mse_kf_m6": 7.842844706067105,
+      "rmse_scada_m3": 14.050835488313899,
+      "rmse_kf_m3": 2.7748780268965767,
+      "reduccion_mse_pct": 96.02846310028774,
+      "reduccion_rmse_pct": 80.25115282856706
+    },
+    {
+      "R": 400.0,
+      "sigma_sensor_m3": 20.0,
+      "mse_scada_m6": 394.95262937807786,
+      "mse_kf_m6": 13.093447539826219,
+      "rmse_scada_m3": 19.87088211024671,
+      "rmse_kf_m3": 3.5758756570926806,
+      "reduccion_mse_pct": 96.68480557771089,
+      "reduccion_rmse_pct": 82.00444430572749
+    }
+  ],
+  "sensibilidad_desajuste_QR": {
+    "factores": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "malla_rmse_m3": [
+      [
+        0.7289955236201504,
+        0.9673215293483037,
+        1.90825667325183,
+        4.131707867551687,
+        8.452960766383567
+      ],
+      [
+        0.8466724504892668,
+        0.7265976100194705,
+        0.9630693630004518,
+        1.9131450448597318,
+        4.227120511154416
+      ],
+      [
+        1.1968673303136148,
+        0.8446272964746916,
+        0.7207670791675044,
+        0.9653706081242805,
+        1.9915628595611685
+      ],
+      [
+        1.75063548411952,
+        1.1955088046017006,
+        0.8398283451216618,
+        0.7226280911754667,
+        1.0774970581818868
+      ],
+      [
+        2.135481361172649,
+        1.7499454013100606,
+        1.1926593119943711,
+        0.8413183166718944,
+        0.845690220683463
+      ]
+    ],
+    "rmse_sintonizacion_perfecta_m3": 0.7207670791675044,
+    "rmse_scada_crudo_m3": 2.2244037485603014,
+    "peor_caso_m3": 8.452960766383567,
+    "mejor_caso_m3": 0.7207670791675044,
+    "combinaciones_peores_que_crudo": 3,
+    "combinaciones_totales": 25
+  }
+}

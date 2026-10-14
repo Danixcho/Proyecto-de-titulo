@@ -1,0 +1,286 @@
+\newpage
+\appendix
+\section*{Anexos}
+\addcontentsline{toc}{section}{Anexos}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\setcounter{subsection}{0}
+
+% =============================================================================
+\subsection{Matriz de revisión bibliográfica}
+\label{anexo:matriz}
+
+La tabla~\ref{tab:matriz-biblio} sistematiza las fuentes utilizadas. Todas
+fueron verificadas individualmente contra su fuente primaria en septiembre de
+2026; se consigna el identificador digital de objeto de cada una para permitir
+la verificación independiente por parte del evaluador.
+
+\begin{table}[H]
+\centering
+\caption{Matriz de revisión bibliográfica.}
+\label{tab:matriz-biblio}
+\scriptsize
+\begin{tabular}{@{}p{2.4cm}p{1.5cm}p{3.1cm}p{3.4cm}p{3.3cm}@{}}
+\toprule
+\textbf{Fuente} & \textbf{Eje} & \textbf{Aporte principal} &
+\textbf{Relación con el proyecto} & \textbf{DOI}\\
+\midrule
+\textcite{kalman1960} & Estimación &
+Estimador recursivo de varianza mínima para sistemas lineales &
+Fundamento algorítmico del módulo (OE3) &
+10.1115/1.3662552\\
+\addlinespace
+\textcite{simon2006} & Estimación &
+Tratamiento moderno de la estimación óptima y convergencia de Riccati &
+Sustento de la convergencia asintótica (OE3, OE4) &
+10.1002/0470045345\\
+\addlinespace
+\textcite{lee2008} & Gemelos &
+Formulación del paradigma de sistemas ciberfísicos &
+Encuadre del acoplamiento físico-computacional &
+10.1109/ISORC.2008.25\\
+\addlinespace
+\textcite{uhlemann2017} & Gemelos &
+Gemelo digital como realización del sistema ciberfísico &
+Contrapunto: sitúa la brecha en el \emph{middleware} &
+10.1016/j.procir.2016.11.152\\
+\addlinespace
+\textcite{tao2019} & Gemelos &
+Gemelo digital para pronóstico y gestión de salud de equipos &
+Aplicación industrial de referencia; asume telemetría limpia &
+10.1016/j.cirp.2019.04.049\\
+\addlinespace
+\textcite{fuller2020} & Gemelos &
+Tecnologías habilitantes y desafíos abiertos &
+Reconoce la calidad de datos como problema no resuelto &
+10.1109/ACCESS.2020.2998358\\
+\addlinespace
+\textcite{liu2021} & Gemelos &
+Revisión de conceptos, tecnologías y aplicaciones industriales &
+Estado de adopción industrial del paradigma &
+10.1016/j.jmsy.2020.06.017\\
+\addlinespace
+\textcite{sepasgozar2021} & Gemelos &
+Distinción entre sombra digital y gemelo digital &
+Criterio conceptual central del proyecto &
+10.3390/buildings11040151\\
+\addlinespace
+\textcite{apelt2002} & Minería &
+Medición inferencial de parámetros de molino SAG por estimación de estados &
+Precedente directo de reconstrucción de estados en conminución &
+10.1016/S0892-6875(02)00229-7\\
+\addlinespace
+\textcite{qu2023} & Minería &
+Revisión comprehensiva de gemelos digitales en la industria de minerales &
+Evidencia de adopción fragmentada; sitúa el vacío &
+10.1080/25726668.2023.2257479\\
+\addlinespace
+\textcite{barzaga2025} & Minería &
+Filtros de Kalman extendido y \emph{unscented} en lixiviación de cobre &
+Precedente en minería del cobre; contraste lineal / no lineal &
+10.3390/min15050521\\
+\addlinespace
+\textcite{ebad2026} & Minería &
+Revisión sistemática de 68 estudios de gemelos digitales con IA en minería &
+Documenta la escasa validación industrial: sustenta el vacío &
+10.3390/technologies14050269\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection*{Nota sobre depuración bibliográfica}
+
+Durante la consolidación de esta entrega se verificó la totalidad de las
+referencias empleadas en las fases previas. Cuatro de ellas no pudieron ser
+localizadas en sus revistas de origen ni en repositorios bibliográficos, por lo
+que fueron retiradas del trabajo y sustituidas por fuentes verificadas de
+pertinencia equivalente o superior. Adicionalmente, se corrigió la atribución
+editorial de \textcite{sepasgozar2021}, que en entregas anteriores aparecía
+asignada a una revista distinta de aquella en que fue efectivamente publicada.
+Esta depuración se documenta aquí en cumplimiento del principio de integridad
+académica declarado en la sección~\ref{sec:etica}.
+
+% =============================================================================
+\subsection{Matriz de correspondencia entre el informe y el artículo científico}
+\label{anexo:correspondencia}
+
+\begin{table}[H]
+\centering
+\caption{Correspondencia entre secciones del informe final y del artículo
+científico en formato IEEE.}
+\label{tab:correspondencia}
+\footnotesize
+\begin{tabular}{@{}p{4.6cm}p{4.6cm}p{4.2cm}@{}}
+\toprule
+\textbf{Sección del informe} & \textbf{Sección del artículo} &
+\textbf{Estado de trazabilidad}\\
+\midrule
+\S\ref{sec:fenomeno}--\ref{sec:pregunta} Fenómeno, problema y pregunta &
+I. Introduction & Consolidado\\
+\addlinespace
+\S\ref{sec:estado-arte} Estado del arte y vacío &
+II. Related Work & Consolidado; misma bibliografía verificada\\
+\addlinespace
+\S\ref{sec:unidad} Unidad de análisis &
+III. Problem Formulation & Modelo y matrices unificados\\
+\addlinespace
+\S\ref{sec:enfoque}--\ref{sec:procedimientos} Metodología &
+IV. Methodology & Consolidado\\
+\addlinespace
+\S\ref{sec:analisis} Estrategia de análisis &
+IV.D. Evaluation Metrics and Tests & Métricas y pruebas unificadas\\
+\addlinespace
+\S\ref{sec:resultados} Resultados &
+V. Results & Mismas figuras y valores numéricos\\
+\addlinespace
+\S\ref{sec:discusion} Discusión &
+VI. Discussion & Consolidado\\
+\addlinespace
+\S\ref{sec:conclusiones} Conclusiones &
+VII. Conclusion & Consolidado\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La trazabilidad entre ambos productos es verificable y no meramente declarada:
+comparten el mismo archivo de referencias, las mismas figuras generadas por el
+código anexo y los mismos valores numéricos, de modo que cualquier discrepancia
+sería detectable por inspección directa.
+
+% =============================================================================
+\subsection{Ajustes derivados de la retroalimentación docente}
+\label{anexo:ajustes}
+
+\begin{table}[H]
+\centering
+\caption{Registro de ajustes incorporados en la entrega final.}
+\label{tab:ajustes}
+\footnotesize
+\begin{tabular}{@{}p{1.8cm}p{4.6cm}p{4.6cm}p{2.4cm}@{}}
+\toprule
+\textbf{Origen} & \textbf{Observación recibida} & \textbf{Ajuste realizado} &
+\textbf{Sección}\\
+\midrule
+Fases 1--3 &
+Lista de referencias en formato numérico cuando la pauta exige APA 7
+autor-fecha &
+Unificación completa bajo APA 7 mediante gestor bibliográfico &
+Referencias\\
+\addlinespace
+Fase 1 &
+Ausencia de matriz de revisión bibliográfica &
+Incorporación de la matriz con caracterización y DOI de cada fuente &
+Anexo~\ref{anexo:matriz}\\
+\addlinespace
+Fase 1 &
+El plan del proyecto era en realidad una sección de alcances; faltaban
+resultados esperados, hitos, avances ABP y trazabilidad al artículo &
+Formulación completa del plan con etapas, entregables, indicadores, hitos,
+criterios de seguimiento y viabilidad &
+\S\ref{sec:plan}\\
+\addlinespace
+Fase 1 &
+Cita de un \emph{working paper} propio no publicado como respaldo externo &
+Retirada; sustituida por fuentes indexadas verificadas &
+Anexo~\ref{anexo:matriz}\\
+\addlinespace
+Fase 2 &
+Trazabilidad con el artículo declarada pero no verificable &
+Matriz de correspondencia explícita y recursos compartidos entre ambos
+productos &
+Anexo~\ref{anexo:correspondencia}\\
+\addlinespace
+Fase 2 &
+Enunciar los objetivos específicos y amarrarlos a cada eje conceptual del marco
+teórico &
+Cada eje del marco teórico declara explícitamente el objetivo que sustenta &
+\S\ref{sec:marco}\\
+\addlinespace
+Fase 3 &
+Consideraciones éticas sin estructura riesgo--mitigación y sin nombrar el riesgo
+central del estudio &
+Reestructuración en cinco riesgos con su acción de mitigación, encabezados por
+la sobreatribución de madurez tecnológica &
+\S\ref{sec:etica}\\
+\addlinespace
+Fase 3 &
+Revisar la unidad de la varianza $R$ &
+Declaración explícita de unidades de todos los parámetros con su fundamento
+físico &
+Tabla~\ref{tab:parametros}\\
+\addlinespace
+Fase 3 &
+Verificar el supuesto de normalidad de la prueba t &
+Prueba de Shapiro-Wilk aplicada; ante su rechazo se incorporó el contraste no
+paramétrico de Wilcoxon &
+\S\ref{sec:analisis}, \S\ref{sec:resultados}\\
+\addlinespace
+Fase 3 &
+Incoherencia dimensional: MSE en \si{\metre\tothe{6}} e intervalo de confianza
+en \si{\metre\cubed} &
+Separación explícita de métricas; toda la inferencia se funda sobre el RMSE en
+\si{\metre\cubed} &
+\S\ref{sec:analisis}\\
+\addlinespace
+Fase 3 &
+Unificación del título del artículo científico &
+Título del artículo alineado con el foco en chancado primario &
+Artículo IEEE\\
+\addlinespace
+Fase 3 &
+Análisis de sensibilidad declarado en los criterios de calidad pero no
+ejecutado &
+Implementación del barrido de degradación y de la malla de desajuste
+$\mathbf{Q}/\mathbf{R}$ &
+\S\ref{sec:resultados}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Se incorporaron además dos ajustes que no provienen de la retroalimentación sino
+de la implementación efectiva del modelo: la recalibración de la covarianza de
+proceso $Q_{22}$ por implausibilidad física
+(\S\ref{sec:recalibracion}) y la unificación de la condición inicial del
+sistema, que presentaba valores distintos en documentos previos.
+
+% =============================================================================
+\subsection{Anexo digital: código fuente y registros de trazabilidad}
+\label{anexo:codigo}
+
+Se adjunta el paquete completo del módulo, cuya estructura es la siguiente:
+
+\begin{table}[H]
+\centering
+\caption{Contenido del anexo digital.}
+\label{tab:anexo-digital}
+\footnotesize
+\begin{tabular}{@{}p{4.6cm}p{8.6cm}@{}}
+\toprule
+\textbf{Componente} & \textbf{Descripción}\\
+\midrule
+\texttt{nucleo\_kalman.py} &
+Núcleo del estimador, genérico y desacoplado del proceso físico\\
+\texttt{modelo\_tolva.py} &
+Modelo de referencia de la tolva, parametrización y degradación SCADA\\
+\texttt{analisis.py} &
+Métricas de error, simulación de Monte Carlo e inferencia estadística\\
+\texttt{sensibilidad.py} &
+Barrido de degradación y malla de desajuste de covarianzas\\
+\texttt{figuras.py} &
+Generación de las figuras del informe y del artículo\\
+\texttt{main.py} &
+Punto de entrada único del experimento\\
+\texttt{README.md} &
+Documentación, parametrización y declaración de madurez tecnológica\\
+\texttt{resultados/logs/} &
+Cuatro registros CSV de trazabilidad\\
+\texttt{resultados/figuras/} &
+Seis figuras en formato vectorial y de mapa de bits\\
+\texttt{resultados/resultados.json} &
+Parametrización, entorno de ejecución y resumen consolidado\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La ejecución del archivo \texttt{main.py} en un entorno con Python~3, NumPy,
+SciPy y Matplotlib reproduce la totalidad de los resultados reportados en este
+informe.

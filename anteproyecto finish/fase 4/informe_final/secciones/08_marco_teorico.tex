@@ -1,0 +1,152 @@
+\section{Marco teórico}
+\label{sec:marco}
+
+El presente marco conceptual establece el piso teórico interdisciplinario entre
+la inteligencia artificial aplicada, la teoría clásica de control estocástico y
+la informática industrial moderna. Se organiza en tres ejes conceptuales, y cada
+uno se vincula explícitamente con el objetivo específico que sustenta.
+
+\subsection{Eje 1: Gemelos digitales, sombras digitales y la exigencia de
+consistencia}
+\label{sec:marco-eje1}
+
+\emph{Este eje sustenta la formulación del problema y, de manera directa, la
+delimitación del alcance declarada en OE3: el módulo se concibe como componente
+arquitectónico y no como herramienta de control.}
+
+El paradigma de los gemelos digitales ha transitado desde la conceptualización
+aeroespacial hacia arquitecturas troncales de la Industria 4.0.
+\textcite{fuller2020} postulan que un gemelo digital trasciende la simulación
+tridimensional estática al requerir una sincronización continua con el activo
+físico. En la industria pesada, \textcite{tao2019} y \textcite{liu2021}
+argumentan que la principal promesa de esta tecnología es habilitar el
+mantenimiento predictivo y la toma de decisiones autónoma mediante inteligencia
+artificial, articulando la visión de sistemas ciberfísicos originalmente
+planteada por \textcite{lee2008}.
+
+Sin embargo, al analizar críticamente estos enfoques sistémicos, se evidencia
+que asumen tácitamente la existencia de una red de telemetría libre de ruido.
+\textcite{sepasgozar2021} aporta la distinción conceptual decisiva: una réplica
+que se limita a recibir y espejar datos crudos constituye una \emph{sombra
+digital}, mientras que un verdadero \emph{gemelo digital} procesa y depura la
+incertidumbre subyacente. Esta distinción no es semántica sino arquitectónica, y
+determina dónde debe ubicarse la responsabilidad de la calidad del dato dentro
+del sistema.
+
+De esta discusión se deriva la posición teórica del proyecto: si la depuración
+de la incertidumbre es condición constitutiva del gemelo digital, entonces el
+estimador estocástico no es un accesorio de preprocesamiento sino un componente
+de primer orden de la arquitectura, y debe diseñarse, documentarse y validarse
+como tal.
+
+\subsection{Eje 2: Observabilidad parcial y degradación de la telemetría
+industrial}
+\label{sec:marco-eje2}
+
+\emph{Este eje fundamenta OE1, la caracterización estadística de las
+perturbaciones, y OE2, la formulación del modelo dinámico con estados no
+sensados.}
+
+La aplicación de los conceptos anteriores al chancado primario choca con un
+desafío físico inherente: la severidad del entorno. La condición operativa de
+una estación de chancado —vibración mecánica continua de gran magnitud y alta
+concentración de polvo abrasivo en suspensión— degrada de forma sistemática las
+señales de los transductores acústicos de nivel.
+
+El resultado es una situación de \textbf{observabilidad parcial}, en la que el
+estado real del sistema difiere sustancialmente del dato reportado en consola.
+Esta condición tiene dos manifestaciones distintas que conviene separar. La
+primera es la \emph{corrupción por ruido} de las variables que sí se miden: el
+volumen es observado, pero con una varianza que compromete su utilidad para la
+automatización. La segunda, más severa, es la \emph{ausencia total de medición}
+de variables físicamente relevantes: la tasa instantánea de extracción del
+chancador no cuenta con instrumentación directa y solo puede inferirse.
+
+Las revisiones de \textcite{qu2023} y \textcite{ebad2026} confirman que la
+integración y la calidad de datos permanecen como desafíos abiertos en la
+adopción de gemelos digitales mineros, y que el esfuerzo investigativo se ha
+concentrado en las capas superiores de predicción antes que en esta capa
+intermedia de consistencia.
+
+Frente a este diagnóstico, el proyecto adopta una posición metodológica
+específica: la solución no radica en la infraestructura de hardware —camino que
+implicaría reemplazo de instrumentación o adición de redundancia sensorial—
+sino en filtros algorítmicos operando sobre la señal existente. Esta elección es
+la que hace del problema un problema de ingeniería informática.
+
+\subsection{Eje 3: Estimación óptima de estados como capa de consistencia}
+\label{sec:marco-eje3}
+
+\emph{Este eje sustenta OE2, OE3 y OE4: aporta las ecuaciones del modelo, el
+algoritmo a implementar y el criterio estadístico bajo el cual se valida.}
+
+Para resolver la observabilidad parcial y reconstruir matemáticamente el volumen
+de mineral, el proyecto se fundamenta en las ecuaciones estocásticas lineales de
+espacio de estados en tiempo discreto:
+
+\begin{align}
+\mathbf{x}_{k+1} &= \mathbf{A}\mathbf{x}_{k} + \mathbf{B}\mathbf{u}_{k}
+                    + \mathbf{w}_{k}, & \mathbf{w}_{k} &\sim
+                    \mathcal{N}(\mathbf{0}, \mathbf{Q}) \label{eq:estado}\\
+\mathbf{y}_{k}   &= \mathbf{H}\mathbf{x}_{k} + \mathbf{v}_{k}, &
+                    \mathbf{v}_{k} &\sim \mathcal{N}(\mathbf{0}, \mathbf{R})
+                    \label{eq:medicion}
+\end{align}
+
+donde $\mathbf{x}_{k} \in \mathbb{R}^{n}$ representa el vector de estados
+latentes reales del activo, $\mathbf{u}_{k} \in \mathbb{R}^{m}$ las entradas
+conocidas registradas por el SCADA, y $\mathbf{y}_{k} \in \mathbb{R}^{p}$ el
+vector de observaciones afectadas por las condiciones ambientales. Las
+perturbaciones internas del proceso y el ruido instrumental se modelan mediante
+vectores gaussianos independientes de media cero, cuyas matrices de covarianza
+$\mathbf{Q}$ y $\mathbf{R}$ delimitan el comportamiento estadístico del entorno.
+
+La teoría de estimación óptima establece que el Filtro de Kalman es el estimador
+recursivo de varianza mínima para sistemas lineales inmersos en ruido gaussiano
+blanco \parencite{kalman1960,simon2006}. Su operación se organiza en un ciclo
+predictor-corrector: la etapa de predicción propaga el estado y su incertidumbre
+mediante el modelo físico, y la etapa de corrección fusiona esa predicción con
+la medición ruidosa ponderando ambas fuentes según su confiabilidad relativa.
+
+\begin{align}
+\hat{\mathbf{x}}_{k|k-1} &= \mathbf{A}\hat{\mathbf{x}}_{k-1|k-1}
+                            + \mathbf{B}\mathbf{u}_{k} \label{eq:pred-x}\\
+\mathbf{P}_{k|k-1} &= \mathbf{A}\mathbf{P}_{k-1|k-1}\mathbf{A}^{\mathsf{T}}
+                      + \mathbf{Q} \label{eq:pred-P}\\
+\mathbf{K}_{k} &= \mathbf{P}_{k|k-1}\mathbf{H}^{\mathsf{T}}
+                  \left(\mathbf{H}\mathbf{P}_{k|k-1}\mathbf{H}^{\mathsf{T}}
+                  + \mathbf{R}\right)^{-1} \label{eq:ganancia}\\
+\hat{\mathbf{x}}_{k|k} &= \hat{\mathbf{x}}_{k|k-1}
+                          + \mathbf{K}_{k}\left(\mathbf{y}_{k}
+                          - \mathbf{H}\hat{\mathbf{x}}_{k|k-1}\right)
+                          \label{eq:corr-x}
+\end{align}
+
+La ganancia $\mathbf{K}_{k}$ de la ecuación~\eqref{eq:ganancia} concentra la
+lógica del estimador: cuando la incertidumbre del modelo $\mathbf{P}_{k|k-1}$ es
+grande respecto de la del sensor $\mathbf{R}$, la ganancia crece y el filtro
+confía en la medición; en el caso inverso, la ganancia decrece y el filtro
+confía en su propia predicción física. Esta ponderación es adaptativa y se
+recalcula en cada ciclo.
+
+La pertinencia de este algoritmo para el proyecto radica en tres propiedades. La
+primera es su \textbf{eficiencia computacional nativa}: el ciclo se reduce a
+operaciones de álgebra lineal sobre matrices de baja dimensión, lo que permite
+su ejecución con costo despreciable, requisito fundamental para un gemelo digital
+en tiempo real. La segunda es su \textbf{fundamento físico}: a diferencia de un
+suavizador estadístico genérico, el Filtro de Kalman incorpora las leyes de
+conservación del proceso en la matriz $\mathbf{A}$, de modo que la estimación
+respeta la física del activo. La tercera es su \textbf{capacidad de reconstruir
+estados no medidos}, siempre que se satisfaga la condición de observabilidad del
+par $(\mathbf{A}, \mathbf{H})$, propiedad que se verifica explícitamente en la
+sección~\ref{sec:unidad}.
+
+La viabilidad de esta aproximación en el dominio minero cuenta con respaldo
+empírico. \textcite{apelt2002} demostraron la medición inferencial de parámetros
+internos de molinos semiautógenos mediante estimación de estados, y
+\textcite{barzaga2025} aplicaron filtros de Kalman extendido y \emph{unscented}
+a la estimación de variables no observables en lixiviación en pilas de cobre.
+Ambos trabajos acreditan que la reconstrucción de estados latentes es efectiva
+en procesos de tratamiento de minerales; la contribución del presente proyecto
+consiste en formular esa capacidad como componente arquitectónico de un gemelo
+digital, con alcance delimitado y validación estadística formal.

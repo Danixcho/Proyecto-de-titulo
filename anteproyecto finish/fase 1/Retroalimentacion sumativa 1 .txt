@@ -1,0 +1,12 @@
+comentarios:
+Estimado Daniel, este es un avance sólido y con una identidad clara. Se nota que entendiste algo que a muchos les cuesta en esta fase: pusiste el foco en el problema y no te apuraste a vender una solución. La decisión de acotar todo a la capa de software analítica —dejando fuera hardware, interfaces y conexiones industriales— es acertada y, sobre todo, la sostienes de forma consistente desde el fenómeno hasta los objetivos. Esa coherencia interna es la mayor fortaleza del trabajo.
+
+Lo mejor está en el núcleo investigativo. El fenómeno queda bien situado, el problema está delimitado con precisión y los objetivos son de lo más logrado del informe: bien redactados como logros, con un verbo por objetivo y una secuencia lógica que va dejando entregables verificables. La pregunta de investigación amarra bien el problema con el vacío, y el estado del arte cumple con comparar enfoques en lugar de solo listar autores. En el plano conceptual, el proyecto está maduro.
+
+Donde tienes que trabajar es más en lo formal y de completitud que en el fondo. Tres cosas concentran la pérdida de puntaje. La primera es el plan del proyecto: hoy es en realidad una sección de alcances y limitaciones, pero le faltan los resultados esperados, los hitos, los avances del proceso ABP y la trazabilidad hacia el artículo científico. La segunda es la citación: todo el documento está en estilo IEEE numérico cuando la pauta pide APA 7 autor-fecha, y falta la matriz de revisión bibliográfica. La tercera son detalles menores pero que suman —la carrera ausente en la portada y la numeración del índice que no calza con la del cuerpo.
+
+Y un punto que quiero que mires con atención aunque no te bajó la nota esta vez: la referencia a tu propio working paper. Como fuente no publicada no cuenta como respaldo externo, y si se descuenta te quedas bajo el mínimo de referencias. Reemplázala por un artículo indexado y evitas el riesgo hacia adelante.
+
+Tienes una base conceptual muy fuerte sobre la que construir el resto del proyecto. Lo que falta es cerrar el plan como corresponde, ordenar la parte formal de las referencias y pulir los detalles de presentación. Nada de eso es de fondo, y con esos ajustes el trabajo queda en muy buen pie para las fases siguientes.
+
+Saludos.

@@ -1,0 +1,364 @@
+% =============================================================================
+%  BATERIA DE PREGUNTAS PARA LA DEFENSA — FASE 4
+%  Proyecto de Investigacion (ACIF3002) — Universidad Andres Bello
+%  Daniel Alejandro Prado Correa
+%
+%  Documento de preparacion personal. No es un entregable de la rubrica.
+%  Compilacion: pdfLaTeX
+% =============================================================================
+
+\documentclass[11pt,letterpaper,oneside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+
+\usepackage{amssymb}
+\let\Bbbk\relax
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\usepackage[letterpaper,margin=2.2cm]{geometry}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{mdframed}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{navy}{HTML}{173A5E}
+\definecolor{rojo}{HTML}{C8102E}
+\definecolor{gris}{HTML}{5A6672}
+\definecolor{fondo}{HTML}{F4F7FB}
+
+\titleformat{\section}{\large\bfseries\color{navy}}{\thesection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4em}{0.7em}
+
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+
+% --- entorno de pregunta -----------------------------------------------------
+\newcounter{preg}
+\newcommand{\pregunta}[1]{%
+  \refstepcounter{preg}%
+  \vspace{0.6em}%
+  {\bfseries\color{rojo} P\thepreg.}\ {\bfseries #1}\par\vspace{0.15em}%
+}
+\newcommand{\resp}[1]{%
+  \begingroup\color{gris}\small\hangindent=1.1em\hangafter=0%
+  \textbf{$\rightarrow$}\ #1\par\endgroup\vspace{0.1em}%
+}
+\newcommand{\ojo}[1]{%
+  \begingroup\color{navy}\small\itshape\hangindent=1.1em\hangafter=0%
+  Nota: #1\par\endgroup%
+}
+
+\begin{document}
+
+% =============================================================================
+\begin{center}
+{\LARGE\bfseries\color{navy} Batería de preguntas para la defensa}\\[0.4em]
+{\large Proyecto de Investigación (ACIF3002) --- Fase 4}\\[0.3em]
+{\color{gris} Daniel Alejandro Prado Correa \quad$\cdot$\quad Universidad Andrés Bello}
+\end{center}
+
+\vspace{0.8em}
+
+\begin{mdframed}[backgroundcolor=fondo,linewidth=0pt,innertopmargin=8pt,
+                 innerbottommargin=8pt,innerleftmargin=10pt,innerrightmargin=10pt]
+\small
+\textbf{Cómo usar este documento.} Las preguntas de la sección~1 se construyeron
+directamente a partir de las observaciones que el docente guía formuló de manera
+recurrente en las retroalimentaciones de las formativas y sumativas previas. Esas
+observaciones son el mejor predictor disponible de lo que se preguntará en la
+defensa: cada una de ellas ya fue corregida en los documentos finales, de modo
+que la respuesta correcta consiste en \emph{señalar dónde} quedó resuelta. Las
+secciones 2 a 5 cubren el terreno técnico y metodológico habitual de una comisión.
+
+\smallskip
+Las respuestas están redactadas en forma breve y hablada, no como texto de
+informe. Practicar en voz alta: ninguna respuesta debería exceder los
+\textbf{45 segundos}.
+\end{mdframed}
+
+% =============================================================================
+\section{Preguntas derivadas de la retroalimentación del docente guía}
+
+\pregunta{El informe está en normas APA y el artículo usa formato IEEE. ¿No es
+una inconsistencia de criterio?}
+\resp{No: son dos productos con normas distintas y ambas exigidas por la
+rúbrica. El informe ABP sigue APA 7.\textsuperscript{a} edición mediante
+\texttt{biblatex} con estilo \texttt{apa}; el artículo sigue el estilo numérico
+IEEE mediante \texttt{IEEEtran}. Lo importante es que ambos productos comparten
+un único archivo \texttt{referencias.bib}: el contenido bibliográfico es
+literalmente el mismo archivo, solo cambia el estilo de salida. Por construcción
+no pueden divergir.}
+
+\pregunta{¿Dónde está el plan del proyecto y cómo verificó su cumplimiento?}
+\resp{En la sección 7 del informe. El plan asocia a cada objetivo específico sus
+actividades, su entregable auditable y su indicador de cumplimiento. La
+verificación uno a uno está en la sección de conclusiones, y el Anexo~C rastrea
+cada observación docente hasta la sección donde quedó incorporada.}
+
+\pregunta{Usted reporta MSE y RMSE. ¿En qué unidades está cada uno?}
+\resp{El MSE está en metros cúbicos a la sexta, porque es el cuadrado de un
+volumen; el RMSE está en metros cúbicos, que es la unidad física interpretable.
+Esa es exactamente la razón por la que la inferencia estadística la hago sobre el
+RMSE y no sobre el MSE: el intervalo de confianza expresado en metros cúbicos
+tiene sentido físico directo, el expresado en metros a la sexta no.}
+\ojo{Esta observación apareció cuatro veces en las retroalimentaciones. Es la
+pregunta más probable del bloque.}
+
+\pregunta{¿Verificó el supuesto de normalidad antes de aplicar la prueba t?}
+\resp{Sí, con Shapiro-Wilk, y el supuesto \textbf{se rechaza}: $p = 0{,}0233$.
+Precisamente por eso el diseño metodológico incorporó desde el inicio el
+contraste de Wilcoxon, que no exige normalidad y que confirma la conclusión con
+$p = 8{,}88 \times 10^{-16}$. La conclusión se sostiene con independencia del
+supuesto paramétrico. Además, con $M = 50$ el teorema central del límite da
+robustez a la prueba t, y una $d$ de Cohen de 19 no se revierte por una
+desviación distribucional moderada.}
+
+\pregunta{¿Dónde está la matriz de revisión bibliográfica?}
+\resp{En el Anexo~A del informe: doce fuentes caracterizadas por tipo, aporte al
+estudio y DOI. Cada DOI fue verificado individualmente contra la fuente primaria.}
+
+\pregunta{En la sección de ética, ¿qué riesgos identificó y cómo los mitigó?}
+\resp{La sección está estructurada como riesgo seguido de mitigación, no como
+declaración general. El riesgo principal es el uso de datos operacionales sujetos
+a acuerdos de confidencialidad; la mitigación es trabajar con datos sintéticos
+generados a partir de parámetros tomados de literatura técnica indexada, lo que
+además permite conocer la verdad de referencia. Los demás riesgos --- integridad
+de los resultados reportados, trazabilidad de las fuentes y reproducibilidad ---
+están tratados con la misma estructura.}
+
+\pregunta{En los avances anteriores el estado inicial aparecía como
+$[15{,}0;\ 0{,}0]$ y en otro documento como $[10{,}0;\ 0{,}0]$. ¿Cuál es el
+correcto?}
+\resp{Detecté esa inconsistencia y la resolví de forma explícita. El estado
+inicial real del sistema es $[15{,}0;\ -0{,}8]$ y el estado inicial del filtro es
+$[15{,}0;\ 0{,}0]$: son cosas distintas y antes estaban confundidas. La
+resolución está documentada en la sección 10 del informe.}
+
+% =============================================================================
+\section{Preguntas técnicas sobre el modelo y el estimador}
+
+\pregunta{¿Por qué un modelo de dos estados y no uno solo?}
+\resp{Porque con un solo estado no hay nada que reconstruir: si el estado es el
+volumen y yo mido el volumen, el filtro solo suaviza. El segundo estado, la tasa
+de llenado, es una variable que ningún instrumento mide, y es la que de verdad
+importa operacionalmente: es la que anticipa el atoro. El modelo de dos estados
+es lo que convierte el problema de suavizado en un problema de estimación.}
+
+\pregunta{¿Cómo sabe que la tasa de llenado es reconstruible si no la mide?}
+\resp{No lo asumo, lo demuestro. Construí la matriz de observabilidad apilando
+$\mathbf{H}$ y $\mathbf{H}\mathbf{A}$, y su rango es 2, igual a la dimensión del
+espacio de estados. Eso significa que la secuencia de mediciones de la única
+variable observada determina unívocamente el estado completo. Es una condición
+formal, verificada en código como parte del experimento.}
+
+\pregunta{¿Qué es la forma de Joseph y por qué la usó?}
+\resp{Es una manera algebraicamente equivalente pero numéricamente estable de
+actualizar la matriz de covarianza del error. La forma simplificada puede perder
+la simetría y la positividad definida por acumulación de error de redondeo, sobre
+todo en corridas largas. La forma de Joseph preserva esas propiedades por
+construcción. Con mil pasos por corrida y cincuenta corridas, esa decisión
+importa.}
+
+\pregunta{¿Por qué el Filtro de Kalman y no un filtro pasa-bajos o un promedio
+móvil?}
+\resp{Un promedio móvil no tiene modelo físico del proceso: introduce retardo de
+fase, no pondera la confiabilidad relativa de la medición, y sobre todo no puede
+entregar la tasa de llenado, porque solo opera sobre la señal que ya existe. El
+Filtro de Kalman incorpora la ecuación de conservación de masa como restricción y
+es óptimo en error cuadrático medio bajo los supuestos del modelo. La diferencia
+no es de grado: el promedio móvil suaviza, el filtro reconstruye.}
+
+\pregunta{¿Por qué recalibró el parámetro $q_{22}$ de la matriz de covarianza de
+proceso?}
+\resp{Porque el valor originalmente documentado, 0,05, es físicamente
+implausible. Verifiqué numéricamente que sobre mil pasos produce un paseo
+aleatorio de la velocidad del orden de $\pm 10$ metros cúbicos por segundo,
+cuando la tasa nominal de extracción es 0,8: trece veces mayor que la magnitud
+que pretende modelar. Lo recalibré a $1\times10^{-4}$ y documenté el ajuste de
+forma explícita en el informe y en el README del código, en lugar de dejarlo
+pasar.}
+
+\pregunta{La ganancia de Kalman converge. ¿Qué implicancia práctica tiene eso?}
+\resp{Es el comportamiento asintótico predicho por la ecuación de Riccati para
+sistemas lineales invariantes en el tiempo. La implicancia práctica es
+directa: una vez alcanzado el régimen permanente, en torno a los 60 segundos, la
+ganancia podría precomputarse y quedar fija, lo que reduce el costo
+computacional por iteración a un par de multiplicaciones matriciales. Para un
+despliegue embebido eso es relevante.}
+
+\pregunta{¿Qué ocurre si el sistema deja de ser lineal? Un atoro, un arranque.}
+\resp{El modelo lineal deja de ser válido y el filtro degradaría. Es una
+limitación que declaro explícitamente: el estudio se restringe al régimen de
+operación continua. La vía de extensión es migrar a las variantes extendida o
+\emph{unscented} del estimador, que es justamente el camino que siguen
+Bárzaga-Martell y colaboradores en lixiviación de cobre. Está recogido como
+segunda línea de continuidad.}
+
+% =============================================================================
+\section{Preguntas sobre validación estadística}
+
+\pregunta{¿Por qué $M = 50$ corridas y no 500 o 1000?}
+\resp{Porque 50 es suficiente para la pregunta que estoy respondiendo. El
+intervalo de confianza al 95\,\% resultante tiene una amplitud de menos de
+0,05 metros cúbicos sobre una diferencia media de 1,51: aumentar $M$ estrecharía
+un intervalo que ya es estrecho, sin cambiar ninguna conclusión. El costo
+computacional se justificaría si el efecto fuera marginal, y no lo es.}
+
+\pregunta{¿Por qué una prueba pareada y no una de muestras independientes?}
+\resp{Porque las observaciones están pareadas por construcción: en cada corrida,
+la lectura cruda del SCADA y la estimación del filtro se evalúan sobre la misma
+realización del ruido y la misma trayectoria verdadera. Tratarlas como
+independientes ignoraría esa correlación y reduciría la potencia de la prueba
+sin ninguna ganancia.}
+
+\pregunta{Una $d$ de Cohen de 19 parece irreal. ¿No es un artefacto?}
+\resp{Es alta porque la varianza \emph{entre corridas} es pequeña comparada con
+la diferencia de medias: el efecto del filtro es muy consistente de corrida en
+corrida. No es un artefacto, es lo que uno esperaría de una comparación
+controlada donde la única fuente de variación es la semilla del ruido. Por eso
+reporto también el intervalo de confianza y el contraste no paramétrico, que son
+menos sensibles a esa escala.}
+
+\pregunta{Los datos son sintéticos. ¿Eso no invalida los resultados?}
+\resp{Delimita el alcance, no invalida el resultado. De hecho es una condición
+necesaria del diseño: para calcular el error cuadrático medio hay que conocer la
+verdad de referencia, y en una faena real esa verdad no existe, porque es
+precisamente lo que no se puede medir. Lo que sí reconozco como limitación es que
+no hay validación bajo discrepancia genuina de modelo, y esa es la primera línea
+de continuidad del trabajo.}
+
+\pregunta{¿Cómo garantiza que sus resultados son reproducibles?}
+\resp{Con semilla pseudoaleatoria fija y flujos independientes generados con
+\texttt{SeedSequence.spawn}, lo que da corridas estadísticamente independientes y
+a la vez exactamente repetibles. Y lo verifiqué: dos ejecuciones sucesivas e
+independientes produjeron archivos de salida idénticos byte a byte, comprobado
+con suma MD5 sobre los cuatro registros CSV. Es un hecho verificado, no una
+declaración de intención.}
+
+% =============================================================================
+\section{Preguntas sobre alcance, aporte y proyección}
+
+\pregunta{Si el Filtro de Kalman existe desde 1960, ¿cuál es el aporte de este
+trabajo?}
+\resp{Ninguno algorítmico, y lo digo explícitamente en el informe. El aporte está
+en tres planos. Arquitectónico: formular la estimación estocástica como
+componente de diseño de un gemelo digital minero, no como instrumento de control
+ni como preprocesamiento, que es la capa que las revisiones de Qu y de Ebad
+identifican como desatendida. Empírico: entregar evidencia cuantificada de que la
+diferencia entre una sombra digital y un gemelo digital es medible. Y
+metodológico: un artefacto reproducible byte a byte con verificación de supuestos
+y análisis de robustez, en un área donde la validación efectiva está señalada
+como carencia.}
+
+\pregunta{¿Esto es investigación o es desarrollo de software?}
+\resp{Es investigación aplicada con un artefacto como instrumento. La pregunta de
+investigación no es «se puede programar un filtro de Kalman» --- eso está
+resuelto hace décadas --- sino si una capa de estimación estocástica, formulada
+como componente arquitectónico, reconstruye de forma confiable el estado interno
+de un activo parcialmente observable. Eso se responde con evidencia estadística,
+y el software es el medio para producirla.}
+
+\pregunta{¿En qué se diferencia su módulo de un preprocesamiento cualquiera del
+\emph{pipeline} de datos?}
+\resp{En que un preprocesamiento opera solo sobre la señal que existe: la
+suaviza, la interpola, le quita valores atípicos. Mi módulo produce una variable
+que no existe en el sistema. Esa es la distinción que quiero dejar planteada: no
+se trata solo de limpiar los datos, sino de reconstruirlos. Y eso justifica
+tratarlo como componente arquitectónico y no como un accesorio del
+\emph{pipeline}.}
+
+\pregunta{¿Cómo se integraría esto a un gemelo digital real?}
+\resp{El módulo está deliberadamente desacoplado: recibe la serie de mediciones y
+las matrices del sistema, y entrega el estado estimado con su covarianza. No
+depende de base de datos, protocolo industrial ni interfaz. Se ubicaría entre la
+capa de adquisición y cualquier consumidor analítico. Como evidencia de ese
+desacoplamiento, apliqué el mismo núcleo sin modificar una línea a otros tres
+subsistemas del activo: potencia del motor, temperatura del estator y desgaste
+del revestimiento.}
+
+\pregunta{¿Cuál es el siguiente paso?}
+\resp{Validación con telemetría real de faena, que es condición necesaria para
+cualquier despliegue y permitiría medir el desempeño bajo discrepancia genuina de
+modelo. Después, extensión a régimen no lineal y sintonización adaptativa de las
+covarianzas a partir de la secuencia de innovaciones, que es lo que sugiere
+directamente el hallazgo sobre la razón $\mathbf{Q}/\mathbf{R}$.}
+
+% =============================================================================
+\section{Preguntas incómodas}
+
+\pregunta{Los resultados de sus avances anteriores no coinciden con estos. ¿Por
+qué cambiaron?}
+\resp{Porque el código original no implementaba el modelo que los documentos
+describían. Implementaba un modelo escalar de un solo estado, no el modelo de dos
+estados que estaba documentado, y además no fijaba semilla, por lo que sus
+resultados no eran reproducibles. Reconstruí el \emph{pipeline} conforme al
+modelo documentado y reporto lo que efectivamente arroja. La diferencia en las
+cifras es consecuencia de la corrección, no del método, y prefiero declararlo
+antes que sostener un número que no puedo reproducir.}
+\ojo{Responder esto de frente y sin rodeos es una fortaleza, no una debilidad.
+Una comisión valora más a quien corrige su propio trabajo que a quien defiende un
+número frágil.}
+
+\pregunta{¿Verificó que todas sus referencias existen?}
+\resp{Sí, una por una contra la fuente primaria. Retiré las que no pude
+verificar y las reemplacé por fuentes con DOI comprobado. También corregí una
+referencia que estaba atribuida a la revista equivocada. Las doce referencias
+finales están en el Anexo~A con su DOI, y la declaración de originalidad del
+informe deja constancia de este procedimiento.}
+
+\pregunta{¿Utilizó herramientas de inteligencia artificial en este trabajo?}
+\resp{Responder con transparencia según lo que efectivamente se usó y conforme a
+la política institucional. El argumento de fondo que sí corresponde sostener es:
+los resultados no dependen de ninguna declaración, provienen de código
+ejecutable con semilla fija que cualquiera puede correr y verificar, y puedo
+explicar y defender cada decisión de modelado, cada parámetro y cada prueba
+estadística de este trabajo.}
+
+\pregunta{Su reducción del MSE es del 89\,\%, pero la del RMSE es solo del
+68\,\%. ¿No está inflando la cifra?}
+\resp{No, son la misma cosa expresada en escalas distintas: el RMSE es la raíz
+del MSE, así que una reducción del 89\,\% en la escala cuadrática equivale
+exactamente a una del 68\,\% en la escala lineal. Reporto ambas justamente para
+que no haya ambigüedad, y hago la inferencia estadística sobre el RMSE, que es la
+métrica en unidades físicas.}
+\ojo{Verificación: $1 - \sqrt{1 - 0{,}8957} = 0{,}6771$. Coherente con el
+67,80\,\% reportado, dentro del redondeo de las medias por corrida.}
+
+% =============================================================================
+\section{Frases de rescate}
+
+Si una pregunta no tiene respuesta a mano, estas fórmulas permiten mantener el
+control sin improvisar contenido:
+
+\begin{itemize}[leftmargin=1.3em,itemsep=0.35em]
+\item «Esa pregunta excede el alcance que declaré para el estudio. La recojo como
+línea de continuidad, y le comento cómo la abordaría.»
+\item «No tengo esa cifra exacta en la cabeza, pero está en la sección X del
+informe y puedo mostrársela.»
+\item «Déjeme distinguir dos cosas que creo que se están mezclando en la
+pregunta.»
+\item «Eso es una limitación real del trabajo y está declarada como tal. Lo que
+sí puedo sostener con la evidencia que tengo es \dots»
+\end{itemize}
+
+\vspace{1.2em}
+\begin{mdframed}[backgroundcolor=fondo,linewidth=0pt,innertopmargin=8pt,
+                 innerbottommargin=8pt,innerleftmargin=10pt,innerrightmargin=10pt]
+\small
+\textbf{Cifras que conviene tener memorizadas.}\quad
+Reducción del MSE del volumen: 89,57\,\% \quad$\cdot$\quad
+Reducción del error en la tasa latente: 98,17\,\% \quad$\cdot$\quad
+$t(49) = 135{,}24$ \quad$\cdot$\quad
+$d$ de Cohen $= 19{,}13$ \quad$\cdot$\quad
+Shapiro-Wilk $p = 0{,}0233$ (se rechaza) \quad$\cdot$\quad
+Wilcoxon $p = 8{,}88\times10^{-16}$ \quad$\cdot$\quad
+Rango de la matriz de observabilidad $= 2$ \quad$\cdot$\quad
+$M = 50$ corridas, $N = 1000$ pasos, semilla 42.
+\end{mdframed}
+
+\end{document}

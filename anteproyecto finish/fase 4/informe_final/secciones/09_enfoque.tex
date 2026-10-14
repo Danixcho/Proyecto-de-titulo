@@ -1,0 +1,81 @@
+\section{Enfoque metodológico}
+\label{sec:enfoque}
+
+\subsection{Paradigma y diseño de la investigación}
+
+El proyecto se inscribe epistemológicamente en el paradigma positivista y adopta
+un diseño metodológico de carácter \textbf{cuantitativo, experimental y basado
+en simulación estocástica computacional}, fundamentado en la modelación dinámica
+en espacio de estados, la estimación óptima recursiva y el método de Monte Carlo
+\parencite{kalman1960,simon2006}.
+
+Esta elección no es una preferencia estilística sino una consecuencia de la
+pregunta de investigación. La pregunta exige cuantificar y minimizar una métrica
+de error sobre variables físicas continuas, y determinar si la mejora observada
+es atribuible al diseño del módulo o al azar. Un diseño cualitativo no podría
+responderla, y un diseño observacional sobre datos de planta —además de
+inviable por las restricciones de confidencialidad— carecería de la verdad de
+referencia contra la cual medir el error, puesto que en una faena real el valor
+verdadero del volumen interno es justamente lo desconocido.
+
+La simulación resuelve ese problema epistemológico de fondo: al generar
+sintéticamente la trayectoria real del sistema, se dispone de una verdad de
+referencia exacta contra la cual contrastar tanto la lectura degradada como la
+estimación del módulo. Esta es la condición que hace posible calcular un error
+verdadero y no un residuo aparente.
+
+\subsection{Tipo de datos y mitigación de la restricción de confidencialidad}
+
+Debido a las estrictas políticas de confidencialidad y a los acuerdos de no
+divulgación imperantes en la industria minera, el acceso a datos SCADA
+históricos en crudo se encuentra restringido. Para abordar esta limitación se
+utilizan \textbf{datos sintéticos estocásticos paramétricos}.
+
+El procedimiento consiste en desarrollar un modelo de la planta física —el
+\emph{truth model}— basado en las leyes de conservación de flujo, al cual se
+inyecta artificialmente ruido blanco gaussiano de proceso y de medición. Las
+matrices de covarianza $\mathbf{Q}$ y $\mathbf{R}$ se parametrizan dentro de
+rangos operativos consistentes con la literatura técnica y con la física del
+activo, según se detalla y justifica en la sección~\ref{sec:unidad}.
+
+Conviene declarar el estatus metodológico de esta decisión con precisión. Los
+datos sintéticos no sustituyen a los datos reales ni pretenden hacerlo: permiten
+evaluar la \emph{capacidad del estimador} bajo condiciones controladas y
+conocidas, lo que constituye una validación de laboratorio. La transferencia a
+un entorno operativo requiere calibración empírica posterior, restricción que se
+declara de manera explícita en las secciones~\ref{sec:etica}
+y~\ref{sec:discusion}.
+
+\subsection{Técnicas de análisis computacional}
+
+La técnica central de análisis corresponde al \textbf{Filtro de Kalman Lineal
+Discreto}. Para garantizar la reproducibilidad científica, el entorno de pruebas
+utiliza Python~3 junto con las bibliotecas estandarizadas NumPy y SciPy, con
+semilla aleatoria de inicialización fija y declarada.
+
+Para validar la robustez del estimador frente a distintos niveles de degradación
+instrumental se emplea el \textbf{método de simulaciones de Monte Carlo},
+ejecutando $M = 50$ realizaciones independientes de un horizonte de $N = 1000$
+pasos cada una. Este diseño asegura que el desempeño reportado no sea producto
+de fluctuaciones estocásticas aisladas de una corrida particular, y provee la
+muestra de pares sobre la cual se aplica la inferencia estadística descrita en
+la sección~\ref{sec:analisis}.
+
+\subsection{Justificación tecnológica de las herramientas}
+
+La selección de Python con NumPy y SciPy responde a dos criterios de ingeniería.
+
+El primero es la \textbf{eficiencia matemática nativa}. El Filtro de Kalman
+requiere la resolución recurrente de álgebra lineal densa, incluyendo
+multiplicación e inversión matricial en cada ciclo de tiempo discretizado. NumPy
+y SciPy encapsulan subrutinas optimizadas de bajo nivel que minimizan el costo
+computacional, lo que sostiene la afirmación de compatibilidad con la operación
+en línea de un gemelo digital.
+
+El segundo es el \textbf{estándar de la industria y la sostenibilidad}. Python
+constituye el estándar contemporáneo para el desarrollo de \emph{pipelines} de
+inteligencia artificial y ciencia de datos. El uso de bibliotecas de código
+abierto elimina los costos asociados a licencias de software propietario y
+garantiza la reproducibilidad científica, la portabilidad y la sostenibilidad
+técnica del código a largo plazo, condiciones necesarias para que un tercero
+pueda verificar los resultados reportados en este informe.

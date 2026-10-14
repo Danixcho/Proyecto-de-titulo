@@ -1,0 +1,92 @@
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+\subsection{Síntesis de los hallazgos}
+
+El proyecto diseñó, implementó y validó estadísticamente un módulo de software
+analítico basado en el Filtro de Kalman Lineal Discreto, concebido como capa de
+consistencia física entre la telemetría degradada de un chancador primario y las
+capas superiores de decisión de un gemelo digital.
+
+Sobre la variable observada, el módulo redujo el error cuadrático medio del
+volumen de carga en un \SI{89,57}{\percent} respecto de la lectura SCADA cruda,
+reducción estadísticamente significativa según prueba t pareada
+($t(49) = 135{,}24$; $p < 0{,}001$) y confirmada por contraste no paramétrico de
+Wilcoxon ante el rechazo del supuesto de normalidad. Sobre la variable latente
+—la tasa de llenado, que ningún instrumento mide— el módulo redujo el error en
+un \SI{98,17}{\percent} respecto del único procedimiento disponible para un
+SCADA convencional, produciendo información de estado que antes no existía en el
+sistema.
+
+El análisis de sensibilidad acreditó que el aporte del módulo crece con la
+degradación del entorno, y que su desempeño está gobernado por la razón entre
+las covarianzas de proceso y medición antes que por sus valores absolutos,
+hallazgo que reduce sustantivamente la dificultad práctica de sintonización.
+
+\subsection{Cumplimiento de los objetivos}
+
+Los cuatro objetivos específicos se cumplieron, y cada uno generó el entregable
+auditable comprometido en el plan del proyecto: matrices de covarianza
+parametrizadas con fundamento físico trazable (OE1), un modelo en espacio de
+estados con observabilidad verificada formalmente (OE2), un módulo de software
+operativo, desacoplado y reproducible (OE3), y una validación estadística
+completa con análisis de robustez (OE4). El objetivo general —diseñar y validar
+mediante simulación estocástica el módulo, optimizando la observabilidad y
+reduciendo el error cuadrático medio— se alcanzó dentro del alcance declarado.
+
+\subsection{Aportes del estudio}
+
+El aporte del trabajo no reside en el algoritmo, que es teoría establecida desde
+\textcite{kalman1960}, sino en tres planos distintos.
+
+En el plano \textbf{arquitectónico}, el estudio formula la estimación estocástica
+de estados como componente de diseño de un gemelo digital minero, y no como
+instrumento de control ni como etapa de preprocesamiento, atendiendo la capa que
+las revisiones de \textcite{qu2023} y \textcite{ebad2026} identifican como
+desatendida.
+
+En el plano \textbf{empírico}, aporta evidencia cuantificada de que la
+diferencia entre una sombra digital y un gemelo digital es medible, y de que la
+capa analítica puede generar observabilidad allí donde la instrumentación no la
+provee.
+
+En el plano \textbf{metodológico}, entrega un artefacto reproducible byte a
+byte, con registros de trazabilidad, verificación de supuestos estadísticos y
+análisis de robustez paramétrica, en un área donde la validación efectiva ha sido
+señalada como carencia.
+
+\subsection{Recomendaciones y líneas de continuidad}
+
+Se identifican cuatro líneas de continuidad, ordenadas por proximidad.
+
+La primera y más inmediata es la \textbf{validación con telemetría real} de una
+faena operativa, que permitiría contrastar el desempeño bajo discrepancia
+genuina de modelo y determinar el nivel de madurez tecnológica efectivamente
+alcanzable. Esta línea es condición necesaria para cualquier despliegue.
+
+La segunda es la \textbf{extensión a regímenes no lineales}, incorporando los
+estados transitorios de arranque y parada y los eventos de atascamiento que este
+estudio excluyó, lo que requeriría migrar hacia variantes extendida o
+\emph{unscented} del estimador, siguiendo el camino de \textcite{barzaga2025}.
+
+La tercera es la \textbf{sintonización adaptativa} de las covarianzas, sugerida
+directamente por el hallazgo sobre la razón $\mathbf{Q}/\mathbf{R}$: un
+mecanismo que ajuste esa proporción en línea a partir de la secuencia de
+innovaciones reduciría aún más la barrera de adopción industrial.
+
+La cuarta es la \textbf{generalización del módulo como servicio transversal} del
+gemelo digital, aplicando el mismo núcleo a los distintos subsistemas del activo
+según la evidencia de extensibilidad reportada en la
+sección~\ref{sec:extensibilidad}.
+
+\subsection{Reflexión final}
+
+La afirmación que sostiene este proyecto es que la inteligencia artificial
+industrial requiere obligatoriamente limpiar matemáticamente sus datos antes de
+tomar decisiones operacionales. Los resultados obtenidos permiten precisarla:
+no se trata solo de limpiar, sino de \emph{reconstruir}. En un sistema
+parcialmente observable, la capa de consistencia física no mejora la información
+disponible, sino que produce información que la instrumentación no puede
+entregar. Reconocer esa función es lo que justifica tratarla como componente
+arquitectónico de primer orden y no como un accesorio del \emph{pipeline} de
+datos.

@@ -1,0 +1,191 @@
+% =============================================================================
+%  INFORME FINAL ABP - FASE 4
+%  Proyecto de Investigacion (ACIF3002) - Universidad Andres Bello
+%  Autor: Daniel Alejandro Prado Correa
+%
+%  Compilacion en Overleaf: pdfLaTeX + Biber
+%    (Menu -> Settings -> Compiler: pdfLaTeX ; TeX Live version: 2023 o superior)
+%
+%  Formato exigido por la rubrica:
+%    - Tamano carta, margenes 2,5 cm en los cuatro lados
+%    - Times New Roman 12 pt, interlineado 1,5
+%    - Normas APA 7.a edicion
+% =============================================================================
+
+\documentclass[12pt,letterpaper,oneside]{article}
+
+% --- Idioma y codificacion ---------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla,es-nodecimaldot]{babel}
+
+% --- Tipografia Times New Roman ---------------------------------------------
+% amssymb debe cargarse antes que newtxmath, que redefine varios simbolos.
+% \Bbbk se libera para evitar el conflicto de doble definicion.
+\usepackage{amssymb}
+\let\Bbbk\relax
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+% --- Geometria e interlineado ------------------------------------------------
+\usepackage[letterpaper,margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% --- Tablas, figuras y matematicas -------------------------------------------
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker={,}, group-separator={.}, per-mode=symbol}
+
+% Leyendas de tablas y figuras en tamano 9, segun la pauta institucional
+\captionsetup{font=small,labelfont=bf,textfont=normalfont}
+\captionsetup[table]{font={stretch=1.0,footnotesize}}
+\captionsetup[figure]{font={stretch=1.0,footnotesize}}
+
+% --- Bibliografia APA 7 ------------------------------------------------------
+\usepackage[style=apa,backend=biber,natbib=true,uniquename=false]{biblatex}
+\usepackage{csquotes}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{referencias.bib}
+
+% --- Enlaces -----------------------------------------------------------------
+\usepackage[hidelinks,breaklinks=true]{hyperref}
+\usepackage{url}
+\urlstyle{same}
+
+% --- Ajustes de presentacion -------------------------------------------------
+\setlength{\parskip}{0.5em}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.15}
+
+% Espacio simple en tablas, notas y bibliografia (permitido por la pauta)
+\usepackage{etoolbox}
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{longtable}{\singlespacing}
+
+% Macros de nomenclatura consistente
+\newcommand{\Vk}{V_{k}}
+\newcommand{\Vdk}{\dot{V}_{k}}
+\newcommand{\xk}{\mathbf{x}_{k}}
+\newcommand{\munit}[1]{\si{#1}}
+
+\begin{document}
+
+% =============================================================================
+%  PORTADA
+% =============================================================================
+\begin{titlepage}
+\centering
+\singlespacing
+\vspace*{1.0cm}
+
+{\large\bfseries UNIVERSIDAD ANDRÉS BELLO}\\[0.3cm]
+{\large Facultad de Ingeniería}\\[0.2cm]
+{\large Escuela de Informática}\\[3.0cm]
+
+{\large\bfseries
+DISEÑO Y VALIDACIÓN MEDIANTE SIMULACIÓN COMPUTACIONAL\\[0.3cm]
+DE UN MÓDULO DE SOFTWARE ANALÍTICO PARA LA ESTIMACIÓN\\[0.3cm]
+DE ESTADOS EN UN GEMELO DIGITAL DE CHANCADO PRIMARIO}\\[0.8cm]
+
+\vspace{0.8cm}
+{\large Informe Final ABP --- Fase 4}\\[0.3cm]
+{\large Consolidación y presentación del anteproyecto de investigación}\\[3.0cm]
+
+\begin{flushleft}
+\begin{tabular}{@{}ll@{}}
+\textbf{Autor:} & Daniel Alejandro Prado Correa\\[0.25em]
+\textbf{Docente guía:} & Omar Iván Salinas Silva\\[0.25em]
+\textbf{Asignatura:} & Proyecto de Investigación\\[0.25em]
+\textbf{Código del curso:} & ACIF3002\\[0.25em]
+\textbf{Carrera:} & Ingeniería Civil Informática\\[0.25em]
+\textbf{Fecha de entrega:} & Septiembre de 2026\\
+\end{tabular}
+\end{flushleft}
+
+\vfill
+{\large Santiago, Chile}
+\end{titlepage}
+
+% =============================================================================
+%  DECLARACION DE ORIGINALIDAD
+% =============================================================================
+\section*{Declaración de originalidad}
+\addcontentsline{toc}{section}{Declaración de originalidad}
+
+Yo, Daniel Alejandro Prado Correa, declaro que este informe es de mi autoría.
+Toda la información proveniente de otros autores ha sido citada y referenciada
+conforme a las normas APA 7.\textsuperscript{a} edición vigentes en la
+institución. Las referencias bibliográficas incluidas en este documento fueron
+verificadas individualmente contra su fuente primaria, y se retiraron aquellas
+cuya existencia no pudo comprobarse. Los resultados numéricos reportados
+provienen de la ejecución del código incluido como anexo digital, con semilla
+pseudoaleatoria fija, y son reproducibles por terceros. Asumo la
+responsabilidad total frente a los criterios de integridad académica de la
+Universidad Andrés Bello.
+
+\vspace{2.2cm}
+\begin{center}
+\rule{7.5cm}{0.4pt}\\
+Daniel Alejandro Prado Correa
+\end{center}
+
+\newpage
+
+% =============================================================================
+%  INDICES
+% =============================================================================
+{\singlespacing
+\tableofcontents
+\newpage
+\listoffigures
+\vspace{1.0cm}
+\listoftables
+}
+\newpage
+
+% =============================================================================
+%  CUERPO
+% =============================================================================
+\input{secciones/01_introduccion}
+\input{secciones/02_fenomeno}
+\input{secciones/03_problema}
+\input{secciones/04_pregunta}
+\input{secciones/05_objetivos}
+\input{secciones/06_estado_arte}
+\input{secciones/07_plan}
+\input{secciones/08_marco_teorico}
+\input{secciones/09_enfoque}
+\input{secciones/10_unidad_analisis}
+\input{secciones/11_tecnicas}
+\input{secciones/12_procedimientos}
+\input{secciones/13_analisis}
+\input{secciones/14_resultados}
+\input{secciones/15_calidad}
+\input{secciones/16_etica}
+\input{secciones/17_coherencia}
+\input{secciones/18_discusion}
+\input{secciones/19_conclusiones}
+
+% =============================================================================
+%  REFERENCIAS
+% =============================================================================
+\newpage
+{\singlespacing
+\printbibliography[title={Referencias}]
+}
+\addcontentsline{toc}{section}{Referencias}
+
+% =============================================================================
+%  ANEXOS
+% =============================================================================
+\input{secciones/20_anexos}
+
+\end{document}

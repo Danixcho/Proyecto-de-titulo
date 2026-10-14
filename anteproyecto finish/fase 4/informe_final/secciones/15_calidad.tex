@@ -1,0 +1,91 @@
+\section{Criterios de calidad del estudio}
+\label{sec:calidad}
+
+El rigor científico y metodológico del estudio se verifica mediante cuatro
+criterios, cada uno con su mecanismo concreto de control y su evidencia de
+verificación.
+
+\subsection{Validez interna y trazabilidad}
+
+\textbf{Definición.} La capacidad de atribuir las diferencias observadas en el
+error exclusivamente al módulo evaluado, y de que un tercero obtenga exactamente
+las mismas salidas.
+
+\textbf{Mecanismo.} Aislamiento del entorno de ejecución, fijación determinista
+de la semilla del generador pseudoaleatorio, derivación de flujos aleatorios
+independientes por corrida a partir de una única semilla maestra, y
+parametrización centralizada en una estructura inmutable.
+
+\textbf{Verificación.} Se ejecutó el experimento completo dos veces de forma
+independiente y se compararon los cuatro archivos CSV generados mediante suma de
+verificación MD5, obteniendo identidad byte a byte. Este criterio, que en las
+entregas previas se declaraba sin demostración, se encuentra ahora comprobado.
+
+\subsection{Confiabilidad y convergencia asintótica}
+
+\textbf{Definición.} La estabilidad de las conclusiones frente a la
+variabilidad estocástica inherente al proceso.
+
+\textbf{Mecanismo.} Diseño de Monte Carlo con $M = 50$ corridas independientes
+de $N = 1000$ pasos, que asegura la convergencia de la ganancia
+$\mathbf{K}_{k}$ y de la covarianza $\mathbf{P}_{k|k}$ hacia sus valores de
+régimen permanente según la formulación de Riccati.
+
+\textbf{Verificación.} La figura~\ref{fig:convergencia} documenta la
+convergencia efectiva de ambas magnitudes. La dispersión de las métricas entre
+corridas es reducida —desviación estándar del RMSE de \SI{0,059}{\metre\cubed}
+para el filtro— y la comparación pareada de la figura~\ref{fig:montecarlo}
+muestra que la ventaja del módulo se sostiene en las cincuenta corridas sin
+excepción.
+
+\subsection{Validez de constructo}
+
+\textbf{Definición.} La correspondencia entre el modelo matemático implementado
+y el fenómeno físico que pretende representar.
+
+\textbf{Mecanismo.} Las matrices del modelo se derivan estrictamente de la ley
+de conservación de masa de la tolva, y no de un ajuste empírico a los datos. Los
+parámetros dimensionales se calibran contra la escala real del activo: la tasa
+de extracción corresponde a la capacidad documentada de un chancador giratorio
+de gran minería, y el volumen por evento de descarga al tonelaje de un camión de
+extracción, según se justifica en la tabla~\ref{tab:parametros}.
+
+\textbf{Verificación.} Además de la trazabilidad física de cada parámetro, se
+verifica computacionalmente la condición de observabilidad del par
+$(\mathbf{A}, \mathbf{H})$ antes de cada corrida
+(ecuación~\eqref{eq:observabilidad}), y se comprobó que el MSE de la telemetría
+cruda coincide con la varianza de ruido inyectada, lo que confirma la
+implementación correcta del generador de degradación.
+
+Corresponde señalar aquí, como control de calidad efectivamente aplicado, que
+este criterio condujo a la detección y corrección de la inconsistencia física de
+la covarianza de proceso documentada en la sección~\ref{sec:recalibracion}.
+
+\subsection{Sensibilidad y robustez}
+
+\textbf{Definición.} Los márgenes dentro de los cuales el módulo conserva su
+utilidad frente a variaciones del entorno y errores de calibración.
+
+\textbf{Mecanismo.} Dos experimentos independientes: barrido de la varianza real
+del sensor sobre dos órdenes de magnitud, y malla de desajuste intencional de
+las razones de covarianza $\mathbf{Q}/\mathbf{R}$ sobre un rango de cuatro
+órdenes de magnitud.
+
+\textbf{Verificación.} Los resultados de las tablas~\ref{tab:degradacion} y de
+la figura~\ref{fig:sensibilidad} acreditan que el aporte del módulo crece con la
+degradación del entorno y que veintidós de veinticinco combinaciones de
+sintonización superan a la línea base. Este criterio, declarado en el diseño
+metodológico de la Fase 3, se implementa efectivamente en esta entrega.
+
+\subsection{Limitaciones de los criterios de calidad}
+
+La honestidad metodológica exige declarar el alcance de estos criterios. La
+validez interna del estudio es alta, pero su \textbf{validez externa} está
+acotada por construcción: los resultados acreditan el desempeño del estimador
+sobre un proceso que satisface exactamente los supuestos del modelo —linealidad,
+ruido gaussiano blanco, covarianzas conocidas—, condición que una planta real
+solo cumple de manera aproximada. El análisis de robustez de la
+sección~\ref{sec:resultados} mitiga parcialmente esta limitación al evaluar el
+desempeño bajo desajuste de covarianzas, pero no sustituye la validación con
+telemetría real, que queda declarada como trabajo futuro en la
+sección~\ref{sec:conclusiones}.

@@ -1,0 +1,44 @@
+\section{Formulación de la pregunta de investigación}
+\label{sec:pregunta}
+
+\subsection{Definición de la pregunta orientadora}
+
+A partir del vacío de conocimiento identificado en la literatura técnica
+(sección~\ref{sec:estado-arte}) y de la delimitación del problema analítico de
+datos en el chancado primario, se formula la siguiente pregunta de
+investigación:
+
+\begin{quote}
+\emph{¿De qué manera el diseño y la validación mediante simulación estocástica
+de un módulo de software analítico basado en el algoritmo del Filtro de Kalman
+Lineal permite mitigar el ruido instrumental y reconstruir de forma confiable el
+estado dinámico interno de volumen de carga en un chancador primario
+parcialmente observable?}
+\end{quote}
+
+\subsection{Alcance e integración de la pregunta}
+
+La pregunta actúa como eje articulador central del anteproyecto y su formulación
+delimita el estudio en tres sentidos simultáneos.
+
+En cuanto al \textbf{objeto}, restringe el alcance exclusivamente a la capa de
+software de carácter matemático y probabilístico, descartando de manera
+explícita el desarrollo de interfaces comerciales, el despliegue de hardware y
+la integración con protocolos industriales operativos.
+
+En cuanto al \textbf{método}, el verbo «validar mediante simulación estocástica»
+compromete un diseño experimental cuantitativo y no un desarrollo puramente
+descriptivo: exige verificar cuantitativamente la confiabilidad de la
+reconstrucción mediante métricas estadísticas explícitas dentro de un entorno
+informático controlado.
+
+En cuanto al \textbf{criterio de respuesta}, la expresión «de forma confiable»
+no queda librada a juicio cualitativo. Se operacionaliza mediante la reducción
+del error cuadrático medio respecto de una línea base declarada —la lectura
+SCADA cruda— y mediante una prueba de hipótesis formal que descarte que dicha
+reducción sea atribuible al azar estocástico.
+
+De este modo, la pregunta vincula directamente la brecha de incertidumbre
+identificada en el problema con el diseño metodológico propuesto y con los
+criterios bajo los cuales los resultados serán evaluados, asegurando que la
+respuesta sea verificable y no meramente argumentativa.

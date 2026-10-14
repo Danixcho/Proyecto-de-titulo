@@ -1,0 +1,113 @@
+\section{Estrategia de análisis de datos}
+\label{sec:analisis}
+
+La estrategia evalúa la efectividad del módulo comparando el desempeño de la
+señal filtrada frente a la línea base telemétrica degradada, respecto de la
+verdad de referencia física.
+
+\subsection{Métricas cuantitativas y coherencia dimensional}
+
+Se cuantifican el error cuadrático medio y su raíz:
+
+\begin{align}
+\mathrm{MSE}_{\text{SCADA}} &= \frac{1}{N}\sum_{k=1}^{N}\left(V_{k}-y_{k}\right)^{2},
+&
+\mathrm{MSE}_{\text{KF}} &= \frac{1}{N}\sum_{k=1}^{N}
+\left(V_{k}-\hat{V}_{k|k}\right)^{2}
+\label{eq:mse}\\[0.3em]
+\mathrm{RMSE} &= \sqrt{\mathrm{MSE}},
+&
+\Delta\mathrm{MSE}_{\%} &= \frac{\mathrm{MSE}_{\text{SCADA}}
+-\mathrm{MSE}_{\text{KF}}}{\mathrm{MSE}_{\text{SCADA}}}\times 100
+\label{eq:reduccion}
+\end{align}
+
+Se distingue de manera explícita entre métricas cuadráticas y lineales, punto
+observado en la retroalimentación de la Fase 3. Dado que el volumen se expresa
+en \si{\metre\cubed}, el error cuadrático medio se expresa necesariamente en
+\si{\metre\tothe{6}}, mientras que su raíz recupera las unidades de la variable
+física, \si{\metre\cubed}.
+
+En consecuencia, y como criterio de diseño del análisis, \textbf{toda la
+inferencia estadística se realiza sobre el RMSE}, de modo que los estadísticos,
+los intervalos de confianza y el tamaño del efecto quedan expresados en
+\si{\metre\cubed} y son dimensionalmente homogéneos con el estado estimado. El
+MSE se reporta como métrica descriptiva y como base del porcentaje de reducción,
+que es adimensional. Conviene advertir que ambos porcentajes no son
+intercambiables: una reducción del MSE del \SI{89,57}{\percent} corresponde a una
+reducción del RMSE del \SI{67,80}{\percent}, por la relación cuadrática entre
+ambas métricas. El informe reporta las dos y declara cuál corresponde en cada
+caso.
+
+\subsection{Diseño de la prueba de hipótesis}
+
+Cada corrida de Monte Carlo constituye una realización independiente del proceso
+estocástico y aporta un par $(\mathrm{RMSE}_{\text{SCADA},m},\
+\mathrm{RMSE}_{\text{KF},m})$. Sobre los $M = 50$ pares se define la diferencia
+$d_{m} = \mathrm{RMSE}_{\text{SCADA},m} - \mathrm{RMSE}_{\text{KF},m}$ y se
+contrasta
+
+\begin{equation}
+H_{0}: \mu_{d} = 0 \qquad \text{frente a} \qquad H_{1}: \mu_{d} > 0,
+\qquad \alpha = 0{,}05
+\label{eq:hipotesis}
+\end{equation}
+
+mediante una \textbf{prueba t de Student para muestras pareadas} de una cola. El
+pareo es metodológicamente pertinente porque ambas mediciones provienen de la
+misma realización del proceso, lo que elimina la variabilidad entre corridas
+como fuente de ruido en la comparación. Se reportan además el intervalo de
+confianza al \SI{95}{\percent} sobre $\mu_{d}$ y el tamaño del efecto mediante
+la $d$ de Cohen para muestras pareadas.
+
+\subsection{Verificación del supuesto de normalidad y contraste de robustez}
+
+La validez de la prueba t descansa sobre el supuesto de normalidad de las
+diferencias. Ese supuesto no se asume: se verifica empíricamente mediante la
+\textbf{prueba de Shapiro-Wilk} sobre la distribución de $d_{m}$.
+
+Adicionalmente, y con independencia del resultado de esa verificación, se aplica
+la \textbf{prueba no paramétrica de Wilcoxon de rangos con signo} como contraste
+de robustez. Esta decisión responde a un criterio de rigor: si ambas pruebas
+concuerdan, la conclusión no depende del cumplimiento del supuesto paramétrico,
+y la inferencia queda blindada frente a la objeción de normalidad. Los
+resultados de ambas pruebas se reportan en la sección~\ref{sec:resultados}.
+
+\subsection{Análisis de la variable latente}
+
+Se evalúa por separado el desempeño sobre la tasa de llenado $\dot{V}_{k}$,
+variable que ningún sensor mide. La línea base para esta comparación es la
+derivada numérica de la señal cruda descrita en la
+sección~\ref{sec:procedimientos}, cuyo ruido se amplifica por un factor
+$\sqrt{2R}/\Delta t$ respecto del ruido del sensor. Este análisis es el que
+permite evaluar directamente la afirmación central sobre observabilidad parcial,
+puesto que mide la capacidad del módulo de reconstruir aquello que no se observa.
+
+\subsection{Análisis de sensibilidad y robustez paramétrica}
+
+Se ejecutan dos experimentos complementarios que operacionalizan el criterio de
+sensibilidad y robustez declarado en la sección~\ref{sec:calidad}.
+
+El \textbf{barrido de degradación} incrementa la varianza real del ruido de
+medición desde condiciones benignas hasta degradación severa, manteniendo el
+filtro correctamente sintonizado, y mide cómo escala el aporte del módulo con la
+hostilidad del entorno.
+
+La \textbf{malla de desajuste} sintoniza el filtro con covarianzas escaladas por
+factores $(\alpha, \beta)$ respecto de las reales, de modo que
+$\mathbf{Q}_{\text{filtro}} = \alpha\,\mathbf{Q}_{\text{real}}$ y
+$\mathbf{R}_{\text{filtro}} = \beta\,\mathbf{R}_{\text{real}}$. Representa el
+escenario realista en que un ingeniero de planta calibra el estimador con
+parámetros imprecisos, y cuantifica cuánta degradación de sintonización tolera
+el módulo antes de perder utilidad. Todas las combinaciones se evalúan sobre
+exactamente los mismos escenarios físicos, de modo que las diferencias
+observadas sean atribuibles únicamente a la calibración.
+
+\subsection{Organización de los resultados}
+
+Los resultados se organizan en cuatro bloques de presentación: métricas
+descriptivas de error en tabla, comparación pareada e inferencia estadística en
+tabla y figura, reconstrucción de series temporales en figura, y análisis de
+sensibilidad en figura de barrido y mapa de calor. Esta organización se mantiene
+idéntica en el artículo científico, según se documenta en el
+Anexo~\ref{anexo:correspondencia}.

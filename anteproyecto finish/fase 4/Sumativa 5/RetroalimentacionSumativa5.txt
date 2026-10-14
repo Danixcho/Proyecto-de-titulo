@@ -1,0 +1,13 @@
+Daniel, esta entrega cierra el proceso en su punto más alto y, seré claro en algo que hasta ahora no había podido decir: no quedan criterios con puntaje descontado en el componente escrito. Eso no es un elogio de cortesía, es la lectura de la rúbrica. Cerraste una por una las deudas que te veníamos marcando desde la Fase 1. La citación, que estuvo cuatro entregas en IEEE o incompleta, hoy está en APA 7 verificada con DOI en el informe y en IEEE correcto en el paper, sin la autocita al working paper propio. El plan del proyecto, que partió en Insuficiente, quedó completo con trazabilidad objetivo-actividad-entregable. Las técnicas, los criterios de calidad y las fuentes, que cayeron a Insuficiente en la Sumativa 3 por entregar una versión recortada, aquí están consolidados. Y la distinción población vs. muestra de simulación, que arrastraba ambigüedad desde la Formativa 3, quedó resuelta con una precisión poco común: declaras explícitamente qué inferencia habilita tu muestra y cuál no.
+
+
+Lo que más valoro, en términos evaluativos, es que la corrección no fue cosmética. La coherencia dimensional del MSE/RMSE, la verificación del supuesto de normalidad con Wilcoxon de respaldo, la recalibración documentada de la covarianza y la reproducibilidad byte a byte no solo suben criterios: muestran que entendiste la observación de fondo, no solo el síntoma. El informe también es honesto donde tiene que serlo, declarando el nivel TRL 3-4 y las limitaciones de validez externa sin maquillarlas.
+
+
+Quedan dos cosas menores, y son formales, no de contenido: hay una referencia cruzada rota ("Anexo ??") en la sección 17.3 y un "17." colgante al final de la sección 5.3, ambos residuos de referencias automáticas mal resueltas; y el nombre del archivo ("Sumativa5") conviene alinearlo con la convención f4_s13. Corrige eso antes de la entrega definitiva. Con el componente escrito en este nivel, tu foco para la semana 13 está donde debe estar: la defensa oral. Prepara la exposición de 10 minutos con la misma disciplina de trazabilidad que muestra el informe, y anticipa preguntas sobre la única limitación real que te pueden apretar, que es la validación exclusivamente sintética, la tienes bien declarada, ahora tienes que sostenerla en vivo.
+
+
+Felicitaciones!!!!!!
+
+
+Saludos.

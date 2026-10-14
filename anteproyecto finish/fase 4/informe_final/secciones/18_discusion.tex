@@ -1,0 +1,164 @@
+\section{Discusión}
+\label{sec:discusion}
+
+\subsection{Interpretación de los resultados frente a los objetivos}
+
+Los resultados obtenidos permiten evaluar el cumplimiento de cada objetivo
+específico y, por agregación, responder la pregunta de investigación.
+
+Respecto de \textbf{OE1}, la caracterización del ruido se materializó en
+matrices de covarianza con unidades explícitas y fundamento físico trazable, y
+su corrección quedó verificada por la coincidencia entre el error de la
+telemetría cruda y la varianza inyectada. Respecto de \textbf{OE2}, el modelo en
+espacio de estados no solo se formuló sino que se sometió a una prueba
+estructural: la verificación de observabilidad del par
+$(\mathbf{A}, \mathbf{H})$, que constituye la condición matemática que habilita
+todo lo demás. Respecto de \textbf{OE3}, el módulo se implementó como
+componente desacoplado y su corrección numérica se verificó mediante la
+convergencia de la ganancia y la covarianza hacia el régimen permanente.
+Respecto de \textbf{OE4}, la validación arrojó una reducción del MSE del
+\SI{89,57}{\percent}, estadísticamente significativa y robusta al supuesto
+distribucional.
+
+La respuesta a la pregunta de investigación es, por tanto, afirmativa en el
+alcance declarado: el diseño y la validación mediante simulación estocástica de
+un módulo basado en el Filtro de Kalman Lineal permiten mitigar el ruido
+instrumental y reconstruir de forma confiable el estado dinámico interno de
+volumen. Ahora bien, el significado de esa respuesta requiere ser interpretado
+con precisión, y a ello se dedican los apartados siguientes.
+
+\subsection{El hallazgo central: la variable que nadie mide}
+
+El resultado de mayor densidad conceptual no es la reducción del error sobre el
+volumen sino la reconstrucción de la tasa de llenado. La distinción importa.
+
+Sobre el volumen, el módulo mejora una señal que \emph{ya existe}: hay un sensor
+que la mide, y el filtro reduce su varianza. Es una contribución valiosa pero
+incremental. Sobre la tasa de llenado, en cambio, el módulo produce información
+que \emph{no existía en ninguna parte del sistema}. Ningún instrumento la mide,
+y el único procedimiento disponible para un SCADA convencional —la derivada
+numérica de la señal cruda— entrega un error de
+\SI{3,69}{\metre\cubed\per\second} sobre una magnitud cuyo valor nominal es
+\SI{0,8}{\metre\cubed\per\second}. Es decir, no entrega una estimación
+imprecisa: entrega ruido con la apariencia de una medición.
+
+Que el módulo reduzca ese error a \SI{0,067}{\metre\cubed\per\second} significa
+que la capa analítica no está limpiando datos sino \emph{creando observabilidad}
+donde la instrumentación no la provee. Esta es la evidencia empírica más directa
+de la tesis del proyecto, y es también el argumento más fuerte a favor de
+concebir el estimador como componente arquitectónico y no como filtro de
+preprocesamiento: un preprocesador mejora lo que recibe, mientras que este
+módulo entrega a las capas superiores una variable de estado que antes no
+estaba disponible para la decisión.
+
+\subsection{Contraste con la literatura}
+
+Los hallazgos dialogan con los tres cuerpos de literatura revisados.
+
+Frente a la literatura de \textbf{gemelos digitales}, los resultados dan
+sustento cuantitativo a la distinción conceptual de \textcite{sepasgozar2021}
+entre sombra digital y gemelo digital. Si la telemetría cruda de la tasa de
+llenado es esencialmente ruido, una réplica virtual alimentada directamente por
+el SCADA no está representando el activo sino su distorsión. La diferencia entre
+ambos conceptos deja de ser terminológica y adquiere una magnitud medible.
+
+Frente a la literatura de \textbf{gemelos digitales mineros}, el estudio se
+alinea con el diagnóstico de \textcite{ebad2026} sobre la escasa validación
+industrial del área y sobre la persistencia de los problemas de integración de
+datos, y con la constatación de \textcite{qu2023} sobre la adopción fragmentada
+en la industria de minerales. El aporte del proyecto consiste en atender
+precisamente la capa que ambas revisiones señalan como desatendida: no la
+sofisticación del modelo predictivo, sino la garantía de consistencia de sus
+entradas.
+
+Frente a la literatura de \textbf{estimación de estados en procesamiento de
+minerales}, los resultados son consistentes con lo reportado por
+\textcite{apelt2002} en molienda semiautógena y por \textcite{barzaga2025} en
+lixiviación de cobre: variables internas no instrumentadas de procesos mineros
+son efectivamente reconstruibles mediante estimación de estados. La diferencia
+del presente trabajo respecto de ambos no es de resultado sino de encuadre.
+Aquellos estudios formulan la estimación como instrumento de medición
+inferencial o de control de procesos; este la formula como componente de una
+arquitectura de gemelo digital, con las exigencias de desacoplamiento,
+reproducibilidad y validación estadística que ese encuadre impone.
+
+Cabe señalar que \textcite{barzaga2025} emplean variantes no lineales —filtros
+extendido y \emph{unscented}— mientras que este proyecto se restringe
+deliberadamente al caso lineal. Esa restricción no es una limitación
+metodológica encubierta sino una decisión de alcance: el balance de masa de una
+tolva es genuinamente lineal en el rango operacional considerado, y emplear un
+estimador no lineal sobre un sistema lineal añadiría costo computacional sin
+ganancia de precisión.
+
+\subsection{El hallazgo sobre robustez y su implicancia práctica}
+
+El análisis de sensibilidad produjo un resultado que no estaba previsto en el
+plan original y que tiene consecuencias prácticas relevantes. La estructura
+diagonal de la malla de desajuste muestra que el desempeño del estimador está
+gobernado por la \emph{razón} entre las covarianzas y no por sus valores
+absolutos: un error de calibración de dos órdenes de magnitud en ambas matrices
+simultáneamente degrada el RMSE desde \num{0,72} hasta apenas
+\SI{0,85}{\metre\cubed}, mientras que el mismo error aplicado a una sola de
+ellas lo eleva hasta \SI{8,45}{\metre\cubed}.
+
+La implicancia para una eventual implementación industrial es directa. La
+dificultad práctica de sintonizar un filtro de Kalman en planta no reside en
+determinar los valores absolutos de $\mathbf{Q}$ y $\mathbf{R}$ —tarea que
+requeriría caracterización metrológica detallada— sino en estimar correctamente
+su proporción, es decir, cuánto confiar en el modelo físico respecto del sensor.
+Esta es una tarea considerablemente más accesible para un ingeniero de procesos,
+y reduce la barrera de adopción del módulo.
+
+El resultado del barrido de degradación apunta en la misma dirección: el aporte
+del módulo crece con la hostilidad del entorno, desde el
+\SI{83,32}{\percent} en condiciones benignas hasta el \SI{96,68}{\percent} en
+degradación extrema. Cuanto peor es el entorno minero, más necesario resulta el
+componente, lo que refuerza la pertinencia contextual del proyecto.
+
+\subsection{Limitaciones del estudio}
+
+La interpretación de los resultados exige declarar con precisión sus límites.
+
+La limitación principal es que la validación se realiza sobre \textbf{datos
+sintéticos generados por el mismo modelo que el filtro utiliza}. Bajo esa
+condición, el Filtro de Kalman es el estimador óptimo por construcción teórica,
+de modo que el estudio verifica la correcta implementación y cuantifica la
+magnitud de la mejora, pero no somete al estimador a una discrepancia de modelo
+genuina. El análisis de desajuste de covarianzas mitiga parcialmente esta
+objeción, pero no la elimina: un proceso real puede presentar no linealidades,
+ruido correlacionado o de color, y derivas no modeladas que este diseño no
+reproduce.
+
+La segunda limitación es de \textbf{alcance del modelo físico}. El balance de
+masa implementado es una simplificación: no incorpora la geometría real de la
+cámara, la segregación granulométrica del material, ni la dependencia de la tasa
+de extracción respecto de la dureza instantánea del mineral. Se excluyeron
+además los estados transitorios de arranque y parada y los eventos de
+atascamiento, que son precisamente las condiciones de mayor interés operacional.
+
+La tercera limitación es la \textbf{ausencia de validación con telemetría
+real}, consecuencia directa de las restricciones de confidencialidad
+documentadas. Esto sitúa el trabajo en un nivel de madurez tecnológica de
+laboratorio y simulación, y ninguna de las cifras reportadas puede interpretarse
+como una predicción del desempeño en planta.
+
+Una cuarta consideración, de orden estadístico, es que el rechazo del supuesto
+de normalidad por la prueba de Shapiro-Wilk, si bien queda cubierto por el
+contraste de Wilcoxon, sugiere que la distribución de las diferencias presenta
+una estructura que este estudio no exploró en profundidad y que podría ser
+objeto de análisis posterior.
+
+\subsection{Implicancias y proyecciones}
+
+Pese a las limitaciones declaradas, el estudio sostiene una afirmación que
+excede su caso particular: en arquitecturas de inteligencia artificial
+industrial, la capa de consistencia física de los datos no es una etapa de
+preprocesamiento sino un componente de diseño de primer orden, y su ausencia
+compromete la validez de todo lo que se construya encima.
+
+La evidencia de extensibilidad del núcleo del módulo reportada en la
+sección~\ref{sec:extensibilidad}, donde el mismo estimador opera sin
+modificación sobre potencia, temperatura y desgaste, sugiere que esta capa puede
+concebirse como un servicio transversal del gemelo digital antes que como una
+solución puntual por variable, línea que se recoge en las proyecciones del
+estudio.

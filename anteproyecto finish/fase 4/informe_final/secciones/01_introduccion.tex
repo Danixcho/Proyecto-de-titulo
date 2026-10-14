@@ -1,0 +1,67 @@
+\section{Introducción}
+\label{sec:introduccion}
+
+El presente informe consolida el proyecto de investigación desarrollado durante
+el semestre bajo la metodología de Aprendizaje Basado en Proyectos, e integra en
+un solo documento coherente los avances producidos en sus cuatro fases: la
+delimitación del problema y la formulación de objetivos, la construcción del
+marco teórico y la definición del enfoque metodológico, el diseño metodológico y
+el levantamiento de datos, y finalmente la consolidación de resultados, su
+discusión y las conclusiones del estudio.
+
+El proyecto se inscribe en el ámbito de la inteligencia artificial aplicada a la
+industria y de los productos tecnológicos orientados a la transformación
+digital. Su objeto es el diseño, la codificación y la validación estadística de
+un módulo de software analítico basado en el Filtro de Kalman Lineal Discreto,
+concebido como el motor matemático de consistencia física de un gemelo digital
+para el chancado primario minero. La relevancia disciplinar del trabajo no
+reside en el algoritmo en sí, que es teoría establecida desde
+\textcite{kalman1960}, sino en la posición que ese algoritmo ocupa dentro de una
+arquitectura de decisión industrial: sostener que la inteligencia artificial
+aplicada a la minería requiere obligatoriamente una capa previa de depuración
+matemática de sus datos, porque ningún modelo predictivo puede ser más confiable
+que la telemetría que lo alimenta.
+
+La lógica de integración del informe sigue el recorrido investigativo real. Se
+parte del fenómeno tecnológico observado —la degradación estocástica de las
+señales SCADA en estaciones de chancado sometidas a vibración severa y polvo
+abrasivo— y se lo delimita como un problema informático de observabilidad
+parcial antes que como una falla de instrumentación. De esa delimitación se
+deriva la pregunta de investigación, y de ella los objetivos, que ordenan el
+trabajo en cuatro logros verificables: caracterizar el ruido, modelar la
+dinámica, desarrollar el estimador y validarlo estadísticamente. La revisión de
+literatura sitúa el estudio en la discusión académica vigente sobre gemelos
+digitales industriales y estimación óptima, y de esa revisión emerge el vacío de
+conocimiento que el proyecto aborda. El diseño metodológico traduce ese vacío en
+un experimento computacional reproducible, cuyos resultados se presentan,
+discuten y contrastan con los objetivos declarados.
+
+Este documento se articula además con el artículo científico desarrollado en
+paralelo, que reporta el mismo estudio en formato IEEE para una audiencia
+especializada. El Anexo~\ref{anexo:correspondencia} explicita la correspondencia
+sección a sección entre ambos productos, de modo que la trazabilidad entre el
+informe y el manuscrito sea verificable y no meramente declarada.
+
+Corresponde señalar de manera explícita que esta versión final incorpora
+ajustes sustantivos derivados de la retroalimentación docente recibida durante
+las fases previas. Se unificó la citación bajo normas APA 7, se completó la
+formulación del plan del proyecto, se reestructuraron las consideraciones éticas
+bajo el esquema riesgo--mitigación, se corrigió la coherencia dimensional de las
+métricas de error, se verificó empíricamente el supuesto de normalidad de la
+prueba de hipótesis y se depuró la bibliografía. El Anexo~\ref{anexo:ajustes}
+documenta cada uno de estos ajustes, la observación que lo originó y la sección
+del informe donde se materializa.
+
+La estructura del documento es la siguiente. Las secciones \ref{sec:fenomeno}
+a~\ref{sec:objetivos} presentan el fenómeno de estudio, la delimitación del
+problema, la pregunta de investigación y los objetivos. La
+sección~\ref{sec:estado-arte} desarrolla la revisión del estado del arte y
+formula el vacío de conocimiento; la sección~\ref{sec:plan} presenta el plan del
+proyecto con sus etapas, hitos y criterios de seguimiento; y la
+sección~\ref{sec:marco} construye el marco teórico. Las
+secciones~\ref{sec:enfoque} a~\ref{sec:analisis} exponen el diseño metodológico
+completo. La sección~\ref{sec:resultados} reporta los resultados obtenidos, y
+las secciones~\ref{sec:calidad} a~\ref{sec:coherencia} desarrollan los criterios
+de calidad, los resguardos éticos y el análisis de coherencia interna del
+diseño. Finalmente, las secciones~\ref{sec:discusion} y~\ref{sec:conclusiones}
+interpretan los hallazgos y cierran el estudio.

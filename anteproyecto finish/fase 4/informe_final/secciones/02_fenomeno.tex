@@ -1,0 +1,82 @@
+\section{Identificación del fenómeno de estudio}
+\label{sec:fenomeno}
+
+\subsection{Área disciplinar y objeto tecnológico}
+
+El estudio se inscribe en la Ingeniería Civil Informática, y de manera
+específica en la intersección de tres áreas disciplinares: la inteligencia
+artificial aplicada a procesos industriales, el procesamiento digital de datos
+provenientes de instrumentación de planta, y el desarrollo de arquitecturas de
+software orientadas a la transformación digital bajo el paradigma de la
+Industria 4.0.
+
+El objeto tecnológico central de análisis es un módulo de software analítico
+para la estimación óptima de estados, concebido para operar como núcleo
+matemático de consistencia física dentro de un gemelo digital. No se trata, por
+tanto, de un dispositivo ni de una plataforma comercial, sino de un componente
+algorítmico de la capa de software: recibe flujos de telemetría degradada,
+reconstruye el estado físico latente del activo y entrega esa reconstrucción a
+las capas superiores de simulación y decisión.
+
+\subsection{Ámbito de aplicación y contexto de uso}
+
+El ámbito de aplicación es el chancado primario en la minería extractiva del
+cobre, primera etapa crítica de conminución del mineral proveniente del
+yacimiento. En una estación de chancado primario giratorio de la gran minería a
+cielo abierto, camiones de extracción de gran tonelaje descargan mineral de
+forma discontinua sobre una tolva de recepción, desde la cual el chancador
+extrae material de manera continua. El volumen retenido en esa cámara es la
+variable operacional que gobierna la continuidad del proceso: un nivel demasiado
+bajo produce operación en vacío e ineficiencia energética, y un nivel demasiado
+alto deriva en atoros y detenciones no programadas.
+
+La supervisión de este subsistema descansa en arquitecturas SCADA que capturan
+variables operacionales mediante instrumentación industrial, típicamente
+transductores ultrasónicos de nivel, sensores de potencia del motor principal y
+celdas de presión. Los operadores y mantenedores de planta toman decisiones a
+partir de lo que esas consolas reportan.
+
+\subsection{Condiciones en que ocurre el fenómeno}
+
+El entorno operativo real de una faena minera se caracteriza por condiciones
+físicas extremas. La trituración de roca genera vibraciones mecánicas continuas
+de gran magnitud transmitidas a toda la estructura, y el proceso libera una alta
+concentración de polvo abrasivo en suspensión que interfiere directamente con la
+propagación de las señales acústicas empleadas por los transductores de nivel.
+
+Estas perturbaciones degradan sistemáticamente las señales analógicas
+recolectadas e inyectan un componente de ruido estocástico de alta frecuencia
+que corrompe la veracidad de la información desplegada en las consolas de
+supervisión. El fenómeno es persistente y estructural: no corresponde a una
+avería puntual del instrumento, sino a la condición normal de operación del
+activo.
+
+\subsection{Actores involucrados}
+
+El fenómeno afecta a cuatro grupos de actores con intereses distintos. Los
+\emph{operadores de planta} toman decisiones de alimentación y detención sobre
+lecturas que no reflejan el estado real de la tolva. Los \emph{ingenieros de
+procesos} calculan indicadores de rendimiento sobre series temporales
+contaminadas. Los \emph{equipos de mantenimiento} pierden capacidad de
+anticipación porque las señales de deterioro quedan sepultadas bajo el ruido
+ambiental. Y los \emph{desarrolladores de sistemas analíticos e ingenieros
+informáticos} —que son los destinatarios directos de este trabajo— construyen
+modelos predictivos y tableros de decisión sobre entradas cuya calidad no está
+garantizada, sin disponer de una capa intermedia que resguarde la consistencia
+de los datos.
+
+\subsection{Relación con el problema identificado}
+
+El fenómeno tecnológico crítico radica en que las lecturas crudas de nivel
+presentan desviaciones estándar que exceden los umbrales admisibles para la
+automatización, introduciendo datos espurios y discontinuidades temporales.
+Existe, en consecuencia, una brecha informacional severa entre el comportamiento
+físico del activo y los flujos de datos que ingresan a la plataforma de
+software.
+
+La decisión analítica que orienta todo este proyecto consiste en caracterizar
+dicho fenómeno como un \emph{desfase analítico de datos} y no como una falla del
+hardware instrumental. Esa caracterización desplaza el foco desde la ingeniería
+de instrumentación hacia la ingeniería de software, y habilita la formulación de
+soluciones algorítmicas que limpien y validen la información sin intervenir la
+infraestructura física existente.

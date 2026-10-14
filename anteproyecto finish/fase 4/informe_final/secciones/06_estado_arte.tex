@@ -1,0 +1,150 @@
+\section{Revisión del estado del arte y vacío de conocimiento}
+\label{sec:estado-arte}
+
+Esta revisión organiza la literatura en tres cuerpos que convergen sobre el
+problema: la conceptualización de los gemelos digitales y los sistemas
+ciberfísicos, su adopción específica en la industria de minerales, y la teoría
+de estimación óptima de estados con sus aplicaciones al procesamiento de
+minerales. El Anexo~\ref{anexo:matriz} presenta la matriz de revisión
+bibliográfica con la caracterización sistemática de cada fuente.
+
+\subsection{Gemelos digitales y sistemas ciberfísicos: la premisa implícita}
+
+El paradigma de los sistemas ciberfísicos fue formulado por \textcite{lee2008}
+como la integración estrecha entre procesos computacionales y procesos físicos,
+señalando desde el inicio que el desafío central no es computacional sino de
+fidelidad del acoplamiento entre ambos dominios. Sobre esa base,
+\textcite{uhlemann2017} propusieron el gemelo digital como realización concreta
+del sistema ciberfísico de producción para la Industria 4.0, y
+\textcite{tao2019} lo orientaron hacia el pronóstico y la gestión de salud de
+equipos complejos. \textcite{fuller2020} sistematizaron las tecnologías
+habilitantes y los desafíos abiertos del área, y \textcite{liu2021} consolidaron
+una revisión de conceptos, tecnologías y aplicaciones industriales.
+
+Al comparar críticamente estos trabajos emerge una convergencia y una omisión
+compartida. La convergencia es que todos coinciden en que la promesa del gemelo
+digital reside en habilitar el mantenimiento predictivo y la toma de decisiones
+autónoma. La omisión es que todos asumen, de manera tácita, la existencia de una
+red de telemetría suficientemente limpia. \textcite{uhlemann2017} plantean la
+integración de \emph{middleware} como vía para resolver las brechas de datos, es
+decir, sitúan el problema en la capa de interoperabilidad y transporte;
+\textcite{tao2019} y \textcite{fuller2020} centran su análisis en la
+arquitectura y en la sincronización, no en la fidelidad de la señal de entrada.
+
+\textcite{sepasgozar2021} es quien nombra con mayor precisión esta tensión al
+distinguir el \emph{digital shadow} —una réplica que recibe datos crudos y los
+espeja— del \emph{digital twin} propiamente tal, que procesa y depura la
+incertidumbre subyacente. Esa distinción es la que este proyecto adopta como
+criterio: sin una capa de depuración matemática explícita, lo que se construye
+no es un gemelo digital sino una sombra digital de alta resolución.
+
+\subsection{Gemelos digitales en la industria de minerales}
+
+La traslación de este paradigma al dominio minero está documentada de manera
+sistemática. \textcite{qu2023} desarrollan una revisión comprehensiva de los
+gemelos digitales en la industria de minerales y evidencian una adopción
+creciente pero fragmentada, con implementaciones concentradas en la
+planificación y el transporte antes que en las etapas de conminución.
+
+La revisión más reciente de \textcite{ebad2026}, que examina sesenta y ocho
+estudios publicados entre 2015 y 2025 sobre gemelos digitales impulsados por
+inteligencia artificial en minería, refuerza y actualiza ese diagnóstico. Los
+autores reportan un predominio marcado de metodologías de aprendizaje automático
+y aprendizaje profundo, e identifican como desafíos persistentes la integración
+de datos, el procesamiento en tiempo real y —de manera notable para este
+estudio— la escasa validación industrial de las propuestas.
+
+La lectura conjunta de ambas revisiones permite una constatación relevante: el
+esfuerzo investigativo en gemelos digitales mineros se ha concentrado en las
+capas superiores de aprendizaje y predicción, mientras que la capa intermedia de
+consistencia física de los datos permanece comparativamente desatendida. Se
+avanza en la sofisticación del modelo predictivo sin avanzar proporcionalmente
+en la garantía de calidad de sus entradas.
+
+\subsection{Estimación óptima de estados y su aplicación en procesamiento de
+minerales}
+
+El marco formal para resolver la observabilidad parcial proviene de la teoría
+clásica de estimación óptima. \textcite{kalman1960} estableció el estimador
+recursivo de varianza mínima para sistemas lineales inmersos en ruido gaussiano
+blanco, y \textcite{simon2006} consolidó el tratamiento moderno del problema,
+incluyendo sus extensiones no lineales y las condiciones de convergencia
+asintótica de la covarianza del error.
+
+La aplicación de esta teoría al procesamiento de minerales tiene precedentes
+sólidos y específicos. \textcite{apelt2002} desarrollaron la medición inferencial
+de parámetros de molinos semiautógenos mediante estimación de estados,
+demostrando que variables internas no instrumentadas del proceso de conminución
+pueden reconstruirse a partir de mediciones indirectas. Más recientemente,
+\textcite{barzaga2025} aplicaron filtros de Kalman extendido y \emph{unscented}
+a la estimación de ley de cobre, consumo de ácido y contenido de humedad en
+lixiviación en pilas, trabajo de particular pertinencia por su foco en la
+minería del cobre y por provenir de un contexto operacional equivalente al
+chileno.
+
+El contraste entre estos dos grupos de literatura es el que estructura la
+posición de este proyecto. La teoría de estimación óptima ofrece un instrumento
+maduro y validado; la literatura de gemelos digitales mineros identifica una
+carencia en la calidad y consistencia de los datos. Sin embargo, ambos cuerpos
+se han desarrollado con escaso contacto entre sí: los trabajos de estimación de
+estados en minería se formulan como problemas de control de procesos, y los
+trabajos de gemelos digitales tratan la calidad del dato como un supuesto previo
+antes que como un componente arquitectónico a diseñar.
+
+\subsection{Identificación del vacío de conocimiento}
+
+De la revisión anterior se desprende un vacío de conocimiento delimitado en
+tres condiciones simultáneas.
+
+\textbf{Primero}, existe evidencia de que la estimación de estados es viable y
+efectiva en procesos de conminución \parencite{apelt2002} y en operaciones
+mineras del cobre \parencite{barzaga2025}, pero ninguno de esos trabajos se
+formula como capa de consistencia de un gemelo digital: se plantean como
+instrumentos de control o de medición inferencial, con objetivos operacionales
+distintos.
+
+\textbf{Segundo}, la literatura de gemelos digitales industriales y mineros
+reconoce la degradación e integración de datos como problema abierto
+\parencite{fuller2020,ebad2026}, pero no incorpora el estimador estocástico como
+elemento arquitectónico explícito entre la capa física y la capa de decisión.
+
+\textbf{Tercero}, y de manera específica, no se identificó en la literatura
+revisada un módulo analítico desacoplado, computacionalmente eficiente y
+validado estadísticamente, que combine el principio físico de conservación de
+masa con el Filtro de Kalman para reconstruir el volumen interno de carga de una
+tolva de chancado primario bajo condiciones de vibración severa.
+
+El vacío no consiste, por tanto, en la ausencia del algoritmo —que es teoría
+establecida hace más de sesenta años— sino en la ausencia de su formulación como
+componente arquitectónico de software, con alcance delimitado, validación
+estadística formal y evidencia de reproducibilidad, dentro de una arquitectura
+de gemelo digital minero. Precisar así el vacío es lo que permite que el aporte
+del proyecto sea evaluable: no se reclama novedad algorítmica, sino aporte de
+diseño, integración y validación.
+
+\subsection{Arquitectura funcional del módulo propuesto}
+
+La figura conceptual del flujo de información permite situar con exactitud el
+componente que este proyecto desarrolla, destacado entre corchetes dobles:
+
+\begin{center}
+\singlespacing
+\small
+{}[Chancador físico] $\rightarrow$ \emph{(vibración y polvo)} $\rightarrow$
+[Sensores / SCADA]\\
+$\downarrow$\\
+\textbf{Datos crudos degradados} $(y_k)$\\
+$\downarrow$\\
+\textbf{[[ Módulo de software analítico --- Filtro de Kalman (Python / NumPy) ]]}\\
+$\downarrow$\\
+\textbf{Estado estimado óptimo} $(\hat{\mathbf{x}}_{k|k}$ con MSE mínimo$)$\\
+$\downarrow$\\{}
+[Capa superior del gemelo digital / Simulación / Toma de decisiones]
+\end{center}
+
+Esta arquitectura funcional evidencia que los elementos seleccionados no son
+piezas aisladas. El algoritmo de Kalman actúa como el motor matemático encargado
+de depurar las señales corruptas del SCADA, garantizando que la réplica virtual
+se construya sobre datos consistentes. El alcance de esta investigación se
+concentra exclusivamente en el desarrollo e interacción del componente
+destacado.

@@ -1,0 +1,77 @@
+\section{Delimitación y fundamentación del problema de investigación}
+\label{sec:problema}
+
+\subsection{Descripción técnica del problema}
+
+La problemática central se define como la incapacidad de las actuales
+plataformas de automatización y adquisición de datos industriales para
+representar de forma consistente y precisa el estado interno de carga de la
+tolva de recepción en un chancador primario minero.
+
+El sistema físico es inherentemente estocástico y parcialmente observable.
+Variables operacionales críticas —el volumen neto de mineral retenido en la
+cavidad interna y, sobre todo, la tasa instantánea de extracción del
+chancador— no pueden sensorizarse de manera directa debido a la hostilidad
+ambiental y a las limitaciones geométricas del equipo. Los datos crudos
+provistos por el SCADA ingresan corrompidos por el ruido del entorno, lo que
+provoca que los modelos deterministas tradicionales, basados en umbrales fijos y
+alarmas de nivel, fallen al capturar las perturbaciones dinámicas del proceso.
+
+La delimitación del problema es deliberadamente estrecha. No se estudia la
+totalidad del proceso de conminución ni el diseño del gemelo digital completo,
+sino un componente específico y acotado: la capa lógica que media entre la
+telemetría degradada y cualquier consumidor analítico posterior.
+
+\subsection{Causas, consecuencias e impacto informático}
+
+Las causas del problema corresponden a las limitaciones de precisión de los
+instrumentos físicos industriales operando bajo vibración constante severa y
+atmósfera con material particulado en suspensión. Se trata de una restricción
+física de la medición, no de un defecto de diseño del sistema de control.
+
+Las consecuencias a nivel de planta se traducen en detenciones no programadas
+por atoro de mineral en la tolva, ineficiencia en el consumo de energía
+eléctrica del motor principal y desgaste prematuro de los componentes mecánicos
+del activo.
+
+Desde la perspectiva de la ingeniería informática, sin embargo, el impacto es de
+otra naturaleza y es el que interesa a este estudio. Las herramientas avanzadas
+de optimización digital, los tableros analíticos y los algoritmos predictivos
+característicos de la Industria 4.0 dependen por completo de la consistencia y
+veracidad de sus entradas. Si el \emph{pipeline} de datos procesa entradas
+corruptas, las decisiones automatizadas divergen y generan recomendaciones
+subóptimas. El problema, formulado en términos informáticos, es que se está
+construyendo una capa de inteligencia artificial industrial sobre un sustrato de
+datos cuya fidelidad nadie ha garantizado.
+
+Esta observación no es especulativa. La revisión sistemática de
+\textcite{ebad2026} sobre sesenta y ocho estudios de gemelos digitales
+impulsados por inteligencia artificial en minería identifica la integración de
+datos y el procesamiento en tiempo real entre los desafíos centrales no
+resueltos del área, junto con la escasez de validación industrial efectiva.
+
+\subsection{Justificación y pertinencia del estudio}
+
+Esta investigación se justifica por la necesidad de proveer una solución que
+resuelva el vacío informacional de forma eficiente y de bajo costo.
+
+A diferencia de los enfoques convencionales, que requieren inversiones
+significativas en hardware de instrumentación o la reestructuración completa de
+las redes SCADA existentes, este proyecto propone el diseño de un módulo de
+software analítico autocontenido y desacoplado. Mediante la aplicación de
+filtros estocásticos recursivos fundamentados en leyes físicas de conservación,
+el módulo depura las señales en tiempo de operación. Esto permite resguardar la
+consistencia de los datos directamente en la capa de software, habilitando la
+viabilidad de los modelos analíticos de nivel superior de manera sostenible.
+
+La pertinencia disciplinar del estudio se sostiene en tres planos. En el plano
+\textbf{teórico}, contribuye a precisar la distinción conceptual entre un
+\emph{digital shadow}, que se limita a replicar datos crudos, y un verdadero
+\emph{digital twin}, que procesa y depura la incertidumbre subyacente
+\parencite{sepasgozar2021}. En el plano \textbf{tecnológico}, entrega un
+componente de software reproducible, verificable y reutilizable sobre distintos
+subsistemas del mismo activo. Y en el plano \textbf{contextual}, aborda un
+proceso que constituye el eslabón inicial de la cadena productiva de la
+principal industria exportadora de Chile, en un momento en que la adopción de
+gemelos digitales en la industria de minerales se encuentra en expansión
+documentada \parencite{qu2023}.

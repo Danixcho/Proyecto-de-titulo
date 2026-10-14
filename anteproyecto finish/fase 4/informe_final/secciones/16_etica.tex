@@ -1,0 +1,83 @@
+\section{Consideraciones éticas}
+\label{sec:etica}
+
+El estudio no involucra participantes humanos ni datos personales, por lo que
+los resguardos éticos no se orientan al consentimiento informado sino a la
+responsabilidad profesional en el manejo de información industrial y en la
+comunicación de resultados de ingeniería. Los resguardos se estructuran bajo el
+esquema riesgo~$\rightarrow$~acción de mitigación.
+
+\subsection{Riesgo 1: Sobreatribución de madurez tecnológica}
+
+\textbf{Riesgo.} Presentar un modelo matemático validado exclusivamente sobre
+datos sintéticos como si fuera un producto informático listo para sustentar
+decisiones operativas reales en planta. Este es el riesgo central y más propio
+de este estudio. Su materialización podría inducir falsas expectativas de
+seguridad o de rendimiento industrial, y en un contexto donde las decisiones de
+alimentación de un chancador tienen consecuencias sobre la integridad del equipo
+y sobre la seguridad de las personas, esa sobreatribución no es un problema
+meramente académico.
+
+\textbf{Acción de mitigación.} Se declara de manera explícita, en el informe, en
+el artículo científico y en la presentación oral, que el algoritmo propuesto se
+encuentra en un nivel de madurez tecnológica de laboratorio y simulación. Se
+exige de forma expresa el pilotaje físico \emph{in situ} y la calibración
+empírica de seguridad como condiciones previas a cualquier despliegue comercial
+en un gemelo digital operativo. Esta declaración se incorpora además al archivo
+\texttt{README} del código entregado, de modo que acompañe al artefacto y no
+solo al documento.
+
+\subsection{Riesgo 2: Exposición de información industrial confidencial}
+
+\textbf{Riesgo.} Vulnerar los acuerdos de no divulgación vigentes en la
+industria minera mediante la exposición de telemetría propietaria, leyes de
+mineral o rendimientos comerciales de faenas específicas.
+
+\textbf{Acción de mitigación.} El proyecto prescinde por completo de datos
+telemétricos crudos de yacimientos específicos y fundamenta su análisis en datos
+sintéticos calibrados con literatura científica pública. Los parámetros
+dimensionales utilizados corresponden a rangos genéricos de la gran minería a
+cielo abierto documentados en fuentes abiertas, y no a valores de operación de
+ninguna faena identificable. Con ello se anula el riesgo de filtración de
+información estratégica.
+
+\subsection{Riesgo 3: Integridad de los resultados reportados}
+
+\textbf{Riesgo.} Reportar métricas de desempeño no verificables, ajustadas para
+favorecer la conclusión, o no reproducibles por terceros.
+
+\textbf{Acción de mitigación.} Se adopta un principio de reproducibilidad
+estricta: todo valor numérico reportado en este informe proviene de la ejecución
+del código anexo con semilla fija, y cualquier evaluador puede reejecutarlo y
+obtener exactamente los mismos resultados. Se reportan tanto las métricas
+favorables como las desfavorables —en particular, el rechazo del supuesto de
+normalidad por la prueba de Shapiro-Wilk y las tres combinaciones de
+sintonización en que el módulo resulta peor que no filtrar—, y se documentan de
+forma explícita las recalibraciones de parámetros realizadas durante el
+desarrollo, con su justificación física (sección~\ref{sec:recalibracion}).
+
+\subsection{Riesgo 4: Trazabilidad y veracidad de las fuentes}
+
+\textbf{Riesgo.} Sustentar afirmaciones del marco teórico o del estado del arte
+en referencias no verificables, lo que comprometería la integridad académica del
+trabajo y la validez de la brecha de conocimiento declarada.
+
+\textbf{Acción de mitigación.} La totalidad de las referencias citadas fue
+verificada individualmente contra su fuente primaria antes de la consolidación
+de este informe. Se retiraron aquellas cuya existencia no pudo comprobarse y se
+sustituyeron por fuentes verificadas de pertinencia equivalente o superior. Se
+corrigió además la atribución editorial de una referencia que aparecía asignada
+a una revista incorrecta en entregas previas. El Anexo~\ref{anexo:matriz}
+consigna, para cada fuente, su identificador digital de objeto, lo que permite
+la verificación independiente por parte del evaluador.
+
+\subsection{Riesgo 5: Uso responsable de herramientas de asistencia}
+
+\textbf{Riesgo.} Incorporar contenido generado por herramientas automatizadas
+sin verificación, en particular datos, citas o resultados numéricos.
+
+\textbf{Acción de mitigación.} Todo resultado numérico presentado procede de
+código ejecutado y auditable, no de estimaciones. Toda referencia bibliográfica
+fue contrastada con su fuente. El código, los registros de trazabilidad y las
+figuras se entregan como anexo digital, de modo que la cadena completa entre el
+dato y la afirmación sea inspeccionable.

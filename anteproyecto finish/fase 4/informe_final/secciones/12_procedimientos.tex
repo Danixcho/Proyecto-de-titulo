@@ -1,0 +1,98 @@
+\section{Procedimientos de recolección de información}
+\label{sec:procedimientos}
+
+El proceso de generación, captura y registro de datos se ejecuta mediante un
+procedimiento sistemático y secuencial estructurado en cinco fases operativas.
+El procedimiento es determinista y replicable: su ejecución en cualquier equipo
+con el mismo entorno produce resultados idénticos.
+
+\subsection{Fase 1: Configuración y control de la semilla pseudoaleatoria}
+
+Se fija de manera determinista la semilla maestra del generador
+pseudoaleatorio en el valor \num{42}. Se inicializan el paso de discretización
+$\Delta t = \SI{1,0}{\second}$, las matrices dinámicas $\mathbf{A}$,
+$\mathbf{B}$ y $\mathbf{H}$, las covarianzas $\mathbf{Q}$ y $\mathbf{R}$, y las
+condiciones iniciales del proceso y del estimador según la
+tabla~\ref{tab:parametros}.
+
+Las $M$ corridas independientes no reutilizan la misma secuencia aleatoria: cada
+una recibe un flujo derivado de la semilla maestra mediante generación de
+secuencias hijas, procedimiento que garantiza simultáneamente independencia
+estadística entre corridas y reproducibilidad exacta del conjunto. Antes de
+iniciar la simulación se verifica computacionalmente el rango de la matriz de
+observabilidad, y la ejecución se aborta si la condición no se satisface.
+
+\subsection{Fase 2: Ejecución del régimen operacional dinámico}
+
+En cada iteración temporal $k \in [1, N]$ se inyecta la señal de control
+$u_{k}$ correspondiente al perfil de descarga de camiones —cuatro ventanas de
+\SI{45}{\second} a \SI{4,5}{\metre\cubed\per\second}, iniciadas en los pasos
+\num{10}, \num{255}, \num{505} y \num{755}— y se propaga el estado real
+$\mathbf{x}_{k}$ incorporando la perturbación de proceso $\mathbf{w}_{k}$.
+
+\subsection{Fase 3: Degradación telemétrica}
+
+Sobre la componente observable del estado real se aplica la inyección del ruido
+estocástico de medición $v_{k}$, generando la lectura degradada $y_{k}$ que
+alimenta simultáneamente al SCADA simulado y al módulo Filtro de Kalman. Esta
+separación es metodológicamente esencial: el filtro nunca accede al estado real,
+solo a la señal corrompida, en las mismas condiciones en que operaría sobre una
+planta.
+
+\subsection{Fase 4: Estimación recursiva}
+
+El módulo ejecuta el ciclo predictor-corrector sobre la serie degradada. En
+paralelo se calcula la línea base de la variable latente mediante diferencias
+finitas de la señal cruda,
+$\dot{V}^{\text{df}}_{k} = (y_{k} - y_{k-1})/\Delta t$, que constituye el único
+procedimiento disponible para un SCADA convencional que quisiera estimar la tasa
+de llenado sin un estimador de estados. Este término de comparación se incorpora
+porque permite dimensionar de forma honesta el aporte del módulo sobre la
+variable no sensada.
+
+\subsection{Fase 5: Almacenamiento y serialización}
+
+Los vectores de series de tiempo resultantes se consolidan y exportan a
+registros CSV estructurados, junto con las métricas por corrida, los resultados
+del análisis de sensibilidad y un archivo JSON de configuración y entorno. La
+tabla~\ref{tab:evidencia} enumera la evidencia documental generada.
+
+\begin{table}[H]
+\centering
+\caption{Registros de trazabilidad generados por el procedimiento.}
+\label{tab:evidencia}
+\footnotesize
+\begin{tabular}{@{}p{5.0cm}p{3.0cm}p{5.4cm}@{}}
+\toprule
+\textbf{Archivo} & \textbf{Dimensión} & \textbf{Contenido}\\
+\midrule
+\texttt{serie\_temporal\_corrida01.csv} & 16 columnas $\times$ 1000 filas &
+Series completas de estado real, lectura degradada, estimación, errores,
+ganancia, covarianza e innovación\\
+\addlinespace
+\texttt{metricas\_montecarlo.csv} & 7 columnas $\times$ 50 filas &
+Métricas de error de cada corrida independiente\\
+\addlinespace
+\texttt{barrido\_degradacion.csv} & 8 columnas $\times$ 7 filas &
+Desempeño ante niveles crecientes de ruido real del sensor\\
+\addlinespace
+\texttt{malla\_desajuste\_QR.csv} & Malla $5\times5$ &
+RMSE ante desajuste intencional de las covarianzas del filtro\\
+\addlinespace
+\texttt{resultados.json} & --- &
+Parametrización completa, versiones del entorno y resumen consolidado\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Resguardo de la consistencia del proceso}
+
+La consistencia del procedimiento se resguarda por tres mecanismos. El primero
+es la \textbf{ejecución desde un punto de entrada único}: un solo archivo
+orquesta todas las fases, de modo que no existe la posibilidad de ejecutar
+parcialmente el experimento con parámetros desactualizados. El segundo es la
+\textbf{parametrización centralizada}: todos los valores del experimento residen
+en una única estructura inmutable, y ningún módulo define constantes propias. El
+tercero es la \textbf{verificación de reproducibilidad}, descrita en la
+sección~\ref{sec:calidad}, que compara mediante suma de verificación las salidas
+de ejecuciones sucesivas.

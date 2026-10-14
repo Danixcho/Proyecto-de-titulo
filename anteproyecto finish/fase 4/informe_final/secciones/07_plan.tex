@@ -1,0 +1,186 @@
+\section{Formulación del plan del proyecto de investigación}
+\label{sec:plan}
+
+Esta sección estructura el proyecto como plan ejecutable y verificable. Se
+declaran las etapas, actividades y entregables asociados a cada objetivo
+específico, los resultados esperados y efectivamente obtenidos, los hitos
+verificables, los criterios de seguimiento, y la evaluación de viabilidad
+técnica y contextual.
+
+\subsection{Estructura de etapas, actividades y entregables}
+
+El plan se organiza en cuatro etapas secuenciales que corresponden
+biunívocamente a los cuatro objetivos específicos y a las cuatro fases del
+proceso ABP. La tabla~\ref{tab:plan} establece la correspondencia entre
+objetivo, actividades, entregable e indicador de cumplimiento.
+
+\begin{table}[H]
+\centering
+\caption{Plan del proyecto: correspondencia entre objetivos, actividades,
+entregables e indicadores de cumplimiento.}
+\label{tab:plan}
+\footnotesize
+\begin{tabular}{@{}p{1.5cm}p{3.5cm}p{3.6cm}p{4.6cm}@{}}
+\toprule
+\textbf{Objetivo} & \textbf{Actividades} & \textbf{Entregable} &
+\textbf{Indicador de cumplimiento}\\
+\midrule
+OE1 &
+Revisión de literatura indexada; extracción de rangos operativos de ruido;
+parametrización de $\mathbf{Q}$ y $\mathbf{R}$ &
+Matriz de revisión bibliográfica y parámetros de covarianza documentados &
+Matrices declaradas con unidades explícitas y justificación física trazable
+(Anexo~\ref{anexo:matriz}; sección~\ref{sec:unidad})\\
+\addlinespace
+OE2 &
+Formulación del balance de masa; discretización; verificación de
+observabilidad &
+Modelo en espacio de estados en tiempo discreto &
+Rango de la matriz de observabilidad igual a 2, verificado
+computacionalmente (sección~\ref{sec:unidad})\\
+\addlinespace
+OE3 &
+Codificación del núcleo predictor-corrector; modularización; generación de
+telemetría degradada &
+Módulo Python operativo con registro estructurado &
+Ejecución sin error y salidas CSV idénticas byte a byte entre corridas
+(sección~\ref{sec:calidad})\\
+\addlinespace
+OE4 &
+Simulación de Monte Carlo; cálculo de métricas; prueba de hipótesis; análisis
+de sensibilidad &
+Informe de resultados, figuras y registros de trazabilidad &
+Reducción del MSE estadísticamente significativa con $\alpha = 0{,}05$
+(sección~\ref{sec:resultados})\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Resultados esperados y resultados obtenidos}
+
+El plan declaró como resultado esperado la obtención de una reducción
+sustantiva y estadísticamente significativa del error cuadrático medio en la
+reconstrucción del volumen, respecto de la lectura SCADA cruda como línea base.
+La tabla~\ref{tab:esperado-obtenido} contrasta lo proyectado con lo
+efectivamente alcanzado.
+
+\begin{table}[H]
+\centering
+\caption{Contraste entre resultados esperados y resultados obtenidos.}
+\label{tab:esperado-obtenido}
+\footnotesize
+\begin{tabular}{@{}p{4.6cm}p{4.2cm}p{4.6cm}@{}}
+\toprule
+\textbf{Resultado esperado} & \textbf{Resultado obtenido} & \textbf{Estado}\\
+\midrule
+Reducción sustantiva del MSE del volumen frente a la línea base &
+Reducción del \SI{89,57}{\percent} (de \num{4,97} a \SI{0,52}{\metre\tothe{6}}) &
+Cumplido\\
+\addlinespace
+Significancia estadística de la mejora con $\alpha = 0{,}05$ &
+$t(49) = 135{,}24$; $p < 0{,}001$; IC 95\,\% $[1{,}488;\ 1{,}533]$~\si{\metre\cubed} &
+Cumplido y reforzado con contraste no paramétrico\\
+\addlinespace
+Reconstrucción del estado latente no sensado &
+Reducción del \SI{98,17}{\percent} en el RMSE de la tasa de llenado &
+Cumplido; excede lo proyectado\\
+\addlinespace
+Costo computacional compatible con operación en tiempo real &
+Ciclo recursivo sobre matrices $2\times2$; \num{1000} pasos en el orden de
+milisegundos &
+Cumplido\\
+\addlinespace
+Verificación de márgenes de estabilidad paramétrica &
+Malla de desajuste $\mathbf{Q}/\mathbf{R}$ de $5\times5$ factores; 22 de 25
+combinaciones superan a la línea base &
+Cumplido; no estaba previsto en el plan inicial\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hitos verificables y trazabilidad con el proceso ABP}
+
+El seguimiento del plan se ancla en los hitos formales de la asignatura, cada
+uno de los cuales produjo evidencia documental evaluada. La
+tabla~\ref{tab:hitos} registra esa trazabilidad.
+
+\begin{table}[H]
+\centering
+\caption{Hitos verificables del proceso ABP y evidencia asociada.}
+\label{tab:hitos}
+\footnotesize
+\begin{tabular}{@{}p{1.7cm}p{4.0cm}p{3.4cm}p{4.2cm}@{}}
+\toprule
+\textbf{Fase} & \textbf{Hito} & \textbf{Evidencia} & \textbf{Estado y ajuste
+derivado}\\
+\midrule
+Fase 1 & Delimitación del problema y formulación de objetivos &
+Sumativa 1 &
+Aprobado; ajuste pendiente en plan del proyecto y citación, cerrado en esta
+entrega\\
+\addlinespace
+Fase 2 & Marco teórico y enfoque metodológico &
+Sumativa 2 &
+Aprobado; ajuste en formato de referencias y trazabilidad con el artículo\\
+\addlinespace
+Fase 3 & Diseño metodológico y levantamiento de datos &
+Formativas 3 y 4; Sumativa 3 &
+Aprobado; ajustes en consideraciones éticas, unidades y supuesto de
+normalidad, cerrados en esta entrega\\
+\addlinespace
+Fase 4 & Consolidación, resultados y comunicación &
+Informe final, artículo IEEE y presentación &
+En ejecución\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Criterios de seguimiento del plan}
+
+El seguimiento se sostiene en cuatro criterios operativos. En cuanto al
+\textbf{cumplimiento de plazos}, cada etapa se ancla a la fecha de la evaluación
+sumativa correspondiente, lo que impone un calendario externo verificable. En
+cuanto al \textbf{alcance}, la sección~\ref{sec:problema} declara exclusiones
+explícitas —interfaces gráficas, bases de datos persistentes, hardware y
+acoplamiento a protocolos industriales— cuyo respeto puede auditarse
+directamente sobre los entregables. En cuanto a la \textbf{calidad}, los
+criterios de rigor de la sección~\ref{sec:calidad} definen umbrales
+verificables, en particular la reproducibilidad exacta bajo semilla fija. Y en
+cuanto a la \textbf{incorporación de retroalimentación}, cada observación
+docente recibida se registra con su ajuste correspondiente y la sección donde se
+materializa (Anexo~\ref{anexo:ajustes}).
+
+\subsection{Viabilidad técnica y contextual}
+
+La \textbf{viabilidad técnica} está acreditada por la ejecución efectiva del
+proyecto. El módulo requiere únicamente un computador personal estándar y
+bibliotecas científicas de código abierto; la complejidad computacional del
+ciclo recursivo sobre matrices de dimensión $2\times2$ es despreciable frente a
+la capacidad de cualquier equipo contemporáneo, lo que sostiene la afirmación de
+compatibilidad con operación en tiempo real.
+
+La \textbf{viabilidad contextual} se resolvió mediante una decisión metodológica
+explícita. Los acuerdos de no divulgación vigentes en la industria minera
+impiden el acceso a telemetría SCADA histórica de faenas operativas, lo que
+haría inviable un diseño basado en datos reales dentro de los plazos y las
+condiciones de acceso de un proyecto de titulación. La generación de datos
+sintéticos paramétricos calibrados con literatura indexada
+(sección~\ref{sec:tecnicas}) convierte esa restricción en un diseño ejecutable,
+al costo —declarado en las secciones~\ref{sec:etica} y~\ref{sec:discusion}— de
+limitar el nivel de madurez tecnológica alcanzable a laboratorio y simulación.
+
+La \textbf{viabilidad de dedicación} se ajusta a una carga nominal de diez horas
+semanales durante el semestre académico, restricción que motivó el blindaje
+deliberado del alcance funcional en torno al motor algorítmico y el descarte de
+módulos periféricos.
+
+\subsection{Relación del plan con el artículo científico}
+
+Cada etapa del plan alimenta una sección específica del manuscrito en formato
+IEEE desarrollado en paralelo. La correspondencia detallada, incluyendo el
+estado de transferencia de cada componente, se documenta en el
+Anexo~\ref{anexo:correspondencia}. Esta relación no es declarativa: ambos
+productos comparten el mismo conjunto de referencias verificadas, las mismas
+figuras generadas por el código anexo y los mismos valores numéricos, de modo
+que cualquier discrepancia entre ellos sería directamente detectable por un
+evaluador.

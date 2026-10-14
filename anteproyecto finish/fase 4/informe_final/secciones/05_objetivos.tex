@@ -1,0 +1,52 @@
+\section{Objetivo general y objetivos específicos}
+\label{sec:objetivos}
+
+\subsection{Objetivo general}
+
+Diseñar y validar mediante simulación estocástica un módulo de software
+analítico para la estimación de estados en un gemelo digital de chancado
+primario minero, aplicando el algoritmo del Filtro de Kalman sobre datos
+ruidosos de tipo SCADA, con el fin de optimizar la observabilidad y reducir el
+error cuadrático medio en la reconstrucción del volumen de carga interna dentro
+de un entorno de simulación controlado.
+
+\subsection{Objetivos específicos}
+
+\begin{enumerate}[label=\textbf{OE\arabic*.},leftmargin=*,itemsep=0.6em]
+
+\item \textbf{Caracterizar estadísticamente} las perturbaciones y el ruido de la
+instrumentación industrial del proceso de chancado primario, mediante el
+análisis de datos de literatura técnica indexada, para parametrizar las matrices
+de covarianza del estimador.
+
+\item \textbf{Modelar matemáticamente} la dinámica simplificada de flujo de
+mineral y la tasa de retención dentro de la tolva de recepción del chancador,
+utilizando ecuaciones lineales en espacio de estados en tiempo discreto.
+
+\item \textbf{Desarrollar computacionalmente} el \emph{pipeline} algorítmico
+recursivo del Filtro de Kalman Lineal, programando de manera óptima las
+funciones de actualización temporal y corrección de mediciones ruidosas.
+
+\item \textbf{Validar el desempeño} del módulo de software mediante simulaciones
+estocásticas de Monte Carlo, cuantificando la reducción del error cuadrático
+medio frente a las lecturas crudas y degradadas del sistema SCADA simulado.
+
+\end{enumerate}
+
+\subsection{Reflexión metodológica de acotamiento}
+
+Los objetivos específicos delimitan de manera estricta las metas del proyecto
+bajo la regla de un único verbo en infinitivo por objetivo. Se separa
+nítidamente la etapa conceptual de modelación matemática (OE2) de la de
+desarrollo e implementación computacional (OE3), y la caracterización de los
+parámetros del entorno (OE1) precede a ambas, puesto que las matrices de
+covarianza son insumo del modelo y no un resultado de él.
+
+Este ordenamiento lógico asegura que cada objetivo específico genere un
+entregable técnico auditable y verificable —parámetros de ruido documentados,
+ecuaciones validadas, scripts del \emph{pipeline} y curvas estadísticas de
+error—, descartando explícitamente elementos ajenos a la ingeniería analítica de
+datos. La correspondencia entre cada objetivo, sus actividades, sus entregables
+y sus indicadores de cumplimiento se detalla en la sección~\ref{sec:plan}, y su
+articulación con las decisiones metodológicas adoptadas se analiza en la
+sección~\ref{sec:coherencia}.
